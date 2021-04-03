@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lms.packages.model.ERole;
 import com.lms.packages.model.Role;
-import com.lms.packages.model.User;
+import com.lms.packages.model.Person;
+import com.lms.packages.repository.PersonRepository;
+import com.lms.packages.repository.RoleRepository;
 import com.lms.packages.payload.request.LoginRequest;
 import com.lms.packages.payload.request.SignupRequest;
 import com.lms.packages.payload.response.JwtResponse;
+
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -31,7 +34,7 @@ public class AuthController {
 	AuthenticationManager authenticationManager;
 
 	@Autowired
-	UserRepository userRepository;
+	PersonRepository personRepository;
 
 	@Autowired
 	RoleRepository roleRepository;
