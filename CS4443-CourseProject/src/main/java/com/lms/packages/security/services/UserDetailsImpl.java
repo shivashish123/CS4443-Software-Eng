@@ -1,4 +1,4 @@
-package com.bezkoder.springjwt.security.services;
+package com.lms.packages.security.services;
 
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.lms.packages.model.Person;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lms.packages.model.Person;
 
@@ -35,16 +36,21 @@ public class UserDetailsImpl implements UserDetails {
 		this.authorities = authorities;
 	}
 
+<<<<<<< HEAD
 	public static UserDetailsImpl build(Person user) {
 		List<GrantedAuthority> authorities = user.getRoles().stream()
+=======
+	public static UserDetailsImpl build(Person person) {
+		List<GrantedAuthority> authorities = person.getRoles().stream()
+>>>>>>> a535587ba4aea2a54e23e704d88c5bf6077995ea
 				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
 				.collect(Collectors.toList());
 
 		return new UserDetailsImpl(
-				user.getId(), 
-				user.getUsername(), 
-				user.getEmail(),
-				user.getPassword(), 
+				person.getId(), 
+				person.getUserName(), 
+				person.getLoginId(),
+				person.getPassword(), 
 				authorities);
 	}
 

@@ -45,9 +45,14 @@ public class Person {
 	@JoinTable(name="role_id")
 	private Role role;
 	
+<<<<<<< HEAD
 	public Person(String email, String password) {
+=======
+	public Person(String username, String email, String password) {
+>>>>>>> a535587ba4aea2a54e23e704d88c5bf6077995ea
 		this.emailId = email;
 		this.password = password;
+		this.userName = username;
 	}
 
 	public Long getId() {
