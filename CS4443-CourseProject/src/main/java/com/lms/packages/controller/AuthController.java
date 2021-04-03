@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lms.packages.model.ERole;
 import com.lms.packages.model.Role;
-import com.lms.packages.model.User;
+import com.lms.packages.model.Person;
 import com.lms.packages.payload.request.LoginRequest;
 import com.lms.packages.payload.request.SignupRequest;
 import com.lms.packages.payload.response.JwtResponse;
@@ -79,7 +79,7 @@ public class AuthController {
 		}
 
 		// Create new user's account
-		User user = new User(signUpRequest.getEmail(),
+		Person user = new Person(signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
 
 		String strRole = signUpRequest.getRole();

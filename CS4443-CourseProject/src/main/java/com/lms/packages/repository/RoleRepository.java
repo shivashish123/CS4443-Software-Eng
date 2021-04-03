@@ -5,9 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.lms.packages.models.ERole;
-import com.bezkoder.springjwt.models.Role;
-
+import com.lms.packages.model.ERole;
+import com.lms.packages.model.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 	Optional<Role> findByName(ERole name);

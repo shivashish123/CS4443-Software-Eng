@@ -6,8 +6,8 @@ import javax.persistence.*;
 import com.lms.packages.model.Role;
 
 @Entity
-@Table(name="USER")
-public class User {
+@Table(name="PERSON")
+public class Person {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -45,7 +45,7 @@ public class User {
 	@JoinTable(name="role_id")
 	private Role role;
 	
-	public User(String email, String password) {
+	public Person(String email, String password) {
 		this.emailId = email;
 		this.password = password;
 	}
