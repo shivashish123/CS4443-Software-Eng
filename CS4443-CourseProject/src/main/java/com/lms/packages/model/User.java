@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	// email address max length is 254
