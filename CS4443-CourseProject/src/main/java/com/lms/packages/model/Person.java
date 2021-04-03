@@ -15,11 +15,11 @@ public class Person {
 	
 	
 	@Column(name="USER_NAME", length=50, nullable=false, unique=false)
-	private String userName;
+	private String username;
 	
 	// email address max length is 254
 	@Column(name="USER_EMAIL",length=254, nullable=false, unique=true)
-	private String emailId;
+	private String email;
 	
 	@Column(name="USER_PASSWORD",length=50, nullable=false, unique=false)
 	private String password;
@@ -30,10 +30,10 @@ public class Person {
 	
 	
 	@Temporal(TemporalType.DATE)
-    private Date birthDate;
+    private Date birthdate;
 	
 	@Column(name="CONTACT_NO", length=12, nullable=true, unique=false)
-	private String contantNo;	
+	private String contantno;	
 	
 	@Column(name="ADDRESS", length= 100 ,nullable=true, unique=false)
 	private String address;	
@@ -48,9 +48,9 @@ public class Person {
 
 
 	public Person(String username, String email, String password) {
-		this.emailId = email;
+		this.email = email;
 		this.password = password;
-		this.userName = username;
+		this.username = username;
 	}
 
 	public Long getId() {
@@ -70,19 +70,19 @@ public class Person {
 	}
 	
 	public String getUserName() {
-		return userName;
+		return username;
 	}
 
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.username = userName;
 	}
 
 	public String getLoginId() {
-		return emailId;
+		return email;
 	}
 
 	public void setEmail(String email) {
-		this.emailId = email;
+		this.email = email;
 	}
 
 	public String getPassword() {
