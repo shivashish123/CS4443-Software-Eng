@@ -1,6 +1,9 @@
 package com.lms.packages.controller;
 
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +25,12 @@ import com.lms.packages.model.Person;
 
 import com.lms.packages.repository.PersonRepository;
 import com.lms.packages.repository.RoleRepository;
-
+import com.lms.packages.security.services.UserDetailsImpl;
 import com.lms.packages.payload.request.LoginRequest;
 import com.lms.packages.payload.request.SignupRequest;
 import com.lms.packages.payload.response.JwtResponse;
-
+import com.lms.packages.payload.response.MessageResponse;
+import com.lms.packages.security.jwt.JwtUtils;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -57,9 +61,10 @@ public class AuthController {
 		String jwt = jwtUtils.generateJwtToken(authentication);
 		
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
-		String role = userDetails.getAuthorities().stream()
+		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
+		String role = roles.get(0); 
 
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 												 userDetails.getId(), 
@@ -71,20 +76,20 @@ public class AuthController {
 	
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+		if (personRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Username is already taken!"));
 		}
 
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+		if (personRepository.existsByEmail(signUpRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: Email is already in use!"));
 		}
 
 		// Create new user's account
-		Person user = new Person(signUpRequest.getEmail(),
+		Person user = new Person(signUpRequest.getUsername() ,signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
 
 		String strRole = signUpRequest.getRole();
@@ -106,12 +111,12 @@ public class AuthController {
 				default:
 					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					role = (adminRole);
+					role = (userRole);
 				}		
 		}
 
 		user.setRole(role);
-		userRepository.save(user);
+		personRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
