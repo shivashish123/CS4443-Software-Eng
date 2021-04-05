@@ -14,12 +14,20 @@ import com.lms.packages.repository.PersonRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
 	PersonRepository personRepository;
-
+	
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Person person = personRepository.findByUsername(username)
+		Person person = personRepository.findByEmail(username)
 				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+
+		return UserDetailsImpl.build(person);
+	}
+	
+	@Transactional
+	public UserDetails loadUserByEmail(String email) throws Exception {
+		Person person = personRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
 
 		return UserDetailsImpl.build(person);
 	}

@@ -54,20 +54,23 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 			
-
 		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));		
 		
 		
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		
+		
 		String jwt = jwtUtils.generateJwtToken(authentication);
+		
+		
 		
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();		
 		List<String> roles = userDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 		String role = roles.get(0); 
-		System.out.println(role);
 		
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 												 userDetails.getId(), 
@@ -118,8 +121,6 @@ public class AuthController {
 				}		
 		}
 		
-		System.out.println(role.getName());
-		System.out.println(user.getPassword().length());
 		user.setRole(role);
 		personRepository.save(user);
 

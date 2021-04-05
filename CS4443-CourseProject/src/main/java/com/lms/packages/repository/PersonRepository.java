@@ -10,6 +10,8 @@ import com.lms.packages.model.Person;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 	Optional<Person> findByUsername(String userName);
+	
+	Optional<Person> findByEmail(String email);
 
 	Boolean existsByUsername(String userName);
 
