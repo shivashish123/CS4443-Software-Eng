@@ -96,10 +96,14 @@ public class AuthController {
 
 		// Create new user's account
 		Person user = new Person(signUpRequest.getUsername() ,signUpRequest.getEmail(),
-							 encoder.encode(signUpRequest.getPassword()));
+							 encoder.encode(signUpRequest.getPassword()),signUpRequest.getAddress(),signUpRequest.getContact(),signUpRequest.getDOB());
 
 		String strRole = signUpRequest.getRole();
 		Role role;
+		
+		System.out.println(signUpRequest.getContact());
+		System.out.println(signUpRequest.getDOB());
+		System.out.println(signUpRequest.getAddress());
 
 		if (strRole == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
@@ -121,7 +125,7 @@ public class AuthController {
 				}		
 		}
 		
-		user.setRole(role);
+		user.setRole(role);		
 		personRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

@@ -26,14 +26,14 @@ public class Person {
 		
 	
 	@Temporal(TemporalType.DATE)
-    private Date birthdate;
+    private Date dob;
 	
 	@Column(name="CONTACT_NO", length=12, nullable=true, unique=false)
 	private String contantno;	
 	
 	@Column(name="ADDRESS", length= 100 ,nullable=true, unique=false)
 	private String address;	
-	
+
 	@Column(name="FINE", nullable=true, unique=false)
 	private int fine;
 	
@@ -45,10 +45,13 @@ public class Person {
 		
 	}
 
-	public Person(String username, String email, String password) {
+	public Person(String username, String email, String password,String address, String contantno , Date dob) {
 		this.email = email;
 		this.password = password;
 		this.username = username;
+		this.address = address;
+		this.contantno = contantno;
+		this.dob = dob;
 	}
 
 	public Long getId() {
@@ -89,6 +92,30 @@ public class Person {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	public String getAddress() {
+        return this.address;
+    }
+      
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+    public String getContact() {
+        return this.contantno;
+    }
+      
+	public void setContact(String contantno) {
+		this.contantno = contantno;
+	}
+	
+	public Date getDOB() {
+        return this.dob;
+    }
+      
+	public void setDOB(Date dob) {
+		this.dob = dob;
 	}
 	
 	
