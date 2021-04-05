@@ -32,6 +32,8 @@ import com.lms.packages.payload.response.JwtResponse;
 import com.lms.packages.payload.response.MessageResponse;
 import com.lms.packages.security.jwt.JwtUtils;
 
+import java.io.*;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
@@ -92,7 +94,7 @@ public class AuthController {
 		Person user = new Person(signUpRequest.getUsername() ,signUpRequest.getEmail(),
 							 encoder.encode(signUpRequest.getPassword()));
 
-		String strRole = signUpRequest.getRole();
+		/*String strRole = signUpRequest.getRole();
 		Role role;
 
 		if (strRole == null) {
@@ -114,8 +116,8 @@ public class AuthController {
 					role = (userRole);
 				}		
 		}
-
-		user.setRole(role);
+		System.out.println("done");
+		user.setRole(role);*/
 		personRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

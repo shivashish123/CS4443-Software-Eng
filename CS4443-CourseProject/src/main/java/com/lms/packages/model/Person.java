@@ -24,9 +24,6 @@ public class Person {
 	@Column(name="USER_PASSWORD",length=50, nullable=false, unique=false)
 	private String password;
 	
-	@Column(name="USER_FULLNAME", length=50, nullable=false, unique=false)
-	private String name;
-	
 	
 	
 	@Temporal(TemporalType.DATE)
@@ -59,14 +56,6 @@ public class Person {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getname() {
-		return name;
-	}
-
-	public void setname(String name) {
-		this.name = name;
 	}
 	
 	public String getUserName() {
