@@ -71,7 +71,7 @@ public class AuthController {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 		String role = roles.get(0); 
-		
+		System.out.println(role);
 		return ResponseEntity.ok(new JwtResponse(jwt, 
 												 userDetails.getId(), 
 												 userDetails.getUsername(), 
@@ -80,7 +80,7 @@ public class AuthController {
 	}
 	
 	
-	@PostMapping("/signup")
+	@PostMapping("/signup")	
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 		if (personRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity
@@ -108,7 +108,7 @@ public class AuthController {
 		} else {
 			
 				switch (strRole) {
-				case "admin":
+				case "ROLE_ADMIN":
 					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
 							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 					role = (adminRole);

@@ -67,7 +67,7 @@ public class Person {
 		this.username = userName;
 	}
 
-	public String getLoginId() {
+	public String getEmail() {
 		return email;
 	}
 

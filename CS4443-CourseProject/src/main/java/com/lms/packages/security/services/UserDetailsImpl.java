@@ -40,11 +40,12 @@ public class UserDetailsImpl implements UserDetails {
 	public static UserDetailsImpl build(Person person) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority(person.getRole().getName().name()));
-
+		System.out.println(person.getRole());
+		System.out.println(person.getEmail());
 		return new UserDetailsImpl(
 				person.getId(), 
 				person.getUserName(), 
-				person.getLoginId(),
+				person.getEmail(),
 				person.getPassword(), 
 				authorities);
 	}
