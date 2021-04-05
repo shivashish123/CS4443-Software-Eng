@@ -7,20 +7,20 @@ export default class Login extends Component{
     constructor(props) {
       super(props);
       this.handleLogin = this.handleLogin.bind(this);
-      this.onChangeUsername = this.onChangeUsername.bind(this);
+      this.onChangeEmailID = this.onChangeEmailID.bind(this);
       this.onChangePassword = this.onChangePassword.bind(this);
   
       this.state = {
-        username: "",
+        emailID: "",
         password: "",
         loading: false,
         message: ""
       };
     }
   
-    onChangeUsername(e) {
+    onChangeEmailID(e) {
       this.setState({
-        username: e.target.value
+        emailID: e.target.value
       });
     }
   
@@ -84,13 +84,13 @@ export default class Login extends Component{
               }}
             >
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">EmailID</label>
                 <Input
                   type="text"
                   className="form-control"
-                  name="username"
-                  value={this.state.username}
-                  onChange={this.onChangeUsername}
+                  name="emailID"
+                  value={this.state.emailID}
+                  onChange={this.onChangeEmailID}
                 //   validations={[required]}
                 />
               </div>

@@ -23,7 +23,7 @@ public class Person {
 	
 	@Column(name="USER_PASSWORD",length=120, nullable=false, unique=false)
 	private String password;
-	
+		
 	
 	@Temporal(TemporalType.DATE)
     private Date birthdate;
@@ -58,7 +58,7 @@ public class Person {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
 	public String getUserName() {
 		return username;
 	}
