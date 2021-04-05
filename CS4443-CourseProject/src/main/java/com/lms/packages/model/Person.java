@@ -28,7 +28,7 @@ public class Person {
 	@Temporal(TemporalType.DATE)
     private Date dob;
 	
-	@Column(name="CONTACT_NO", length=12, nullable=true, unique=false)
+	@Column(name="CONTACT_NO", length=12, nullable=false, unique=false)
 	private String contantno;	
 	
 	@Column(name="ADDRESS", length= 100 ,nullable=true, unique=false)
