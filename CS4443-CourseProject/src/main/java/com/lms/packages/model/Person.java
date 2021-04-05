@@ -21,12 +21,8 @@ public class Person {
 	@Column(name="USER_EMAIL",length=254, nullable=false, unique=true)
 	private String email;
 	
-	@Column(name="USER_PASSWORD",length=50, nullable=false, unique=false)
+	@Column(name="USER_PASSWORD",length=120, nullable=false, unique=false)
 	private String password;
-	
-	@Column(name="USER_FULLNAME", length=50, nullable=false, unique=false)
-	private String name;
-	
 	
 	
 	@Temporal(TemporalType.DATE)
@@ -45,7 +41,9 @@ public class Person {
 	@JoinTable(name="role_id")
 	private Role role;
 	
-
+	public Person() {
+		
+	}
 
 	public Person(String username, String email, String password) {
 		this.email = email;
@@ -61,14 +59,6 @@ public class Person {
 		this.id = id;
 	}
 
-	public String getname() {
-		return name;
-	}
-
-	public void setname(String name) {
-		this.name = name;
-	}
-	
 	public String getUserName() {
 		return username;
 	}
