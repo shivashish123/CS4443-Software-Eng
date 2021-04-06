@@ -3,13 +3,14 @@ import './App.css';
 import Home from './components/home.component';
 import Login from './components/login.component';
 import SignUp from './components/signup.component';
-
+import Forgot from './components/forgot';
 import {
   BrowserRouter as Router,
   Switch,
   Route
 
 } from "react-router-dom";
+
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Switch>          
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/forgot" component ={Forgot} />
           </Switch>
     </div>
     </Router>

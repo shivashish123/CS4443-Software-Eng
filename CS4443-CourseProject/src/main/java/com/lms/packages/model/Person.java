@@ -21,6 +21,8 @@ public class Person {
 	@Column(name="USER_EMAIL",length=254, nullable=false, unique=true)
 	private String email;
 	
+	
+
 	@Column(name="USER_PASSWORD",length=120, nullable=false, unique=false)
 	private String password;
 		
@@ -59,6 +61,7 @@ public class Person {
 		this.id = id;
 	}
 	
+	
 	public String getUserName() {
 		return username;
 	}
@@ -70,7 +73,11 @@ public class Person {
 	public String getLoginId() {
 		return email;
 	}
-
+	
+	public String getEmail() {
+		return email;
+	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lms.packages.model.Person;
 
+
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
 	Optional<Person> findByUsername(String userName);
@@ -14,4 +15,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	Boolean existsByUsername(String userName);
 
 	Boolean existsByEmail(String email);
+	
+	Person findByEmailIgnoreCase(String email);
 }
