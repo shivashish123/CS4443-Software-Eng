@@ -1,6 +1,5 @@
-import axios from "axios";
 import React, {Component} from "react"
-
+import ForgotService from "../services/forgot.service";
 
 export default class Forgot extends Component{
     constructor(props){
@@ -9,14 +8,16 @@ export default class Forgot extends Component{
         this.state={
             emailid: ""
         };
+        
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(e) {
         this.setState({emailid : e.target.value});
       }
     handleSubmit(e){
         e.preventDefault()
-        axios.post("http://localhost:8080/api/forgot-password",e.target.value)
+        ForgotService.forgot(this.state.emailid)       
         .then(
             (res)=>{
                 console.log(res);
