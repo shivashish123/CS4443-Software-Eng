@@ -46,6 +46,16 @@ const vpassword = value => {
   }
 };
 
+const vcontact = value => {
+  if (value.length !== 10) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Contact Number should be of length 10
+      </div>
+    );
+  }
+};
+
 export default class Signup extends Component {
   constructor(props) {
     super(props);
@@ -53,13 +63,18 @@ export default class Signup extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.onChangeContact = this.onChangeContact.bind(this);
+    this.onChangeDOB = this.onChangeDOB.bind(this);
+    this.onChangeAddress = this.onChangeAddress.bind(this);
 
     this.state = {
       username: "",
       email: "",
       password: "",
       successful: false,
-      message: ""
+      message: "",
+      contact: "",
+      dob:""
     };
   }
 
@@ -81,6 +96,24 @@ export default class Signup extends Component {
     });
   }
 
+  onChangeAddress(e){
+    this.setState({
+      address: e.target.value
+    });
+  }
+
+  onChangeContact(e) {
+    this.setState({
+      contact: e.target.value
+    });
+  }
+
+  onChangeDOB(e){
+    this.setState({
+      dob: e.target.value
+    });
+  }
+
   handleRegister(e) {
     e.preventDefault();
 
@@ -95,7 +128,10 @@ export default class Signup extends Component {
       AuthService.register(
         this.state.username,
         this.state.email,
-        this.state.password
+        this.state.password,
+        this.state.address,
+        this.state.contact,
+        this.state.dob
       ).then(
         response => {
           this.setState({
@@ -171,6 +207,40 @@ export default class Signup extends Component {
                     value={this.state.password}
                     onChange={this.onChangePassword}
                     validations={[required, vpassword]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="contact">Contact</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="contact"
+                    value={this.state.contact}
+                    onChange={this.onChangeContact}
+                    validations={[required, vcontact]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="Adress">Address</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="address"
+                    value={this.state.address}
+                    onChange={this.onChangeAddress}                    
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="DOB">DOB</label>
+                  <Input
+                    type="date"
+                    className="form-control"
+                    name="dob"
+                    value={this.state.dob}
+                    onChange={this.onChangeDOB}                    
                   />
                 </div>
 
