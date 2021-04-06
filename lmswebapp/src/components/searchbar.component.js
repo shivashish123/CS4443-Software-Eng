@@ -11,16 +11,24 @@ const sortByOptions = [
     { value: 'A-Z', label: 'Alpha' }
 ];
 
+const searchByOptions = [
+  { value: 'Book', label: 'Book' },
+  { value: 'Author', label: 'Author' },
+  { value: 'Publisher', label: 'Publisher' }
+];
+
 export default class SearchBar extends Component {
     constructor(props){
         super(props)
         this.onChangeKeyword = this.onChangeKeyword.bind(this);
         this.onChangeSortBy  = this.onChangeSortBy.bind(this);
+        this.onChangeSearchBy  = this.onChangeSearchBy.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
 
         this.state = {
             keyword: "",
             sortBy: "Alpha",
+            searchBy: "Book",
             message: "",
             successful: false
         };
@@ -37,6 +45,10 @@ export default class SearchBar extends Component {
         this.setState({ sortBy :selectedOption.value });
         console.log(`Option selected:`, selectedOption);
     };
+    onChangeSearchBy = selectedOption => {
+      this.setState({ searchBy :selectedOption.value });
+      console.log(`Option selected:`, selectedOption);
+    };
 
     handleSearch(e){
         e.preventDefault();
@@ -51,7 +63,8 @@ export default class SearchBar extends Component {
                     
             Searchservice.searchBooks(
               this.state.keyword,
-              this.state.sortBy
+              this.state.searchBy,
+              this.state.sortBy,
             ).then(
               response => {
                 this.setState({
@@ -79,6 +92,7 @@ export default class SearchBar extends Component {
     render(){
         return(
             <div>
+              <h3 class="SerachHeading">Search Books</h3>
                 <Form
                     onSubmit={this.handleSearch}
                     ref={c => {
@@ -95,11 +109,21 @@ export default class SearchBar extends Component {
                     value={this.state.keyword}
                     onChange={this.onChangeKeyword}
                   /> 
-                  </div>             
+                  </div>  
                   <div>
                   <Select
                     value={this.sortBy}
                     className ="searchSelect"
+                    placeholder ="Search By"
+                    onChange={this.onChangeSearchBy}
+                    options={searchByOptions}
+                  />
+                  </div>           
+                  <div>
+                  <Select
+                    value={this.sortBy}
+                    className ="searchSelect2"
+                    placeholder ="Sort By"
                     onChange={this.onChangeSortBy}
                     options={sortByOptions}
                   />

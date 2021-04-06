@@ -27,6 +27,7 @@ import com.lms.packages.repository.PersonRepository;
 import com.lms.packages.repository.RoleRepository;
 import com.lms.packages.security.services.UserDetailsImpl;
 import com.lms.packages.payload.request.LoginRequest;
+import com.lms.packages.payload.request.SearchRequest;
 import com.lms.packages.payload.request.SignupRequest;
 import com.lms.packages.payload.response.JwtResponse;
 import com.lms.packages.payload.response.MessageResponse;
@@ -131,4 +132,5 @@ public class AuthController {
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
 	
+
 }

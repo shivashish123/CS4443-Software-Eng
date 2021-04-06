@@ -51,11 +51,11 @@ label {
 }
 
 .searchTerm {
-  width: 100%;
+  width: 200%;
   border: 3px solid #282c34;
   padding: 5px;
   height: 40px;
-  border-radius: 5px;
+  border-radius: 5px;  
   outline: none;
   color: #282c34;
 }
@@ -64,6 +64,12 @@ label {
   color: #282c34;
 }
 .searchSelect{
+  width: 150px;
+  height: 40px;
+  margin-left:250px;
+  margin-right:5px;
+}
+.searchSelect2{
   width: 150px;
   height: 40px;
   margin-left:5px;
@@ -81,8 +87,12 @@ label {
   color: #fff;
   border-radius: 0 5px 5px 0;
   cursor: pointer;
-  font-size: 20px;
-  
+  font-size: 20px;  
+}
+
+.SerachHeading{
+  text-align: center;
+  padding: 5px;
 }
 
 /*Resize the wrap to see the search bar change!*/
