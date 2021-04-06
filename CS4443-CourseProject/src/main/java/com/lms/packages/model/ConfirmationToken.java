@@ -1,6 +1,7 @@
 package com.lms.packages.model;
 
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -31,6 +32,7 @@ public class ConfirmationToken {
 	@OneToOne(targetEntity = Person.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
     private Person person;
+	Random random = new Random(1000);
 	
 	public Person getPerson() {
 		return person;
@@ -44,9 +46,11 @@ public class ConfirmationToken {
 	}
 	
 	public ConfirmationToken(Person person) {
+		
+		String otp = Integer.toString(random.nextInt(99999));
 		this.person = person;
 		createdDate = new Date();
-		confirmationToken = UUID.randomUUID().toString();
+		confirmationToken = otp;
 	}
 
 	public String getConfirmationToken() {

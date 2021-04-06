@@ -2,6 +2,7 @@ package com.lms.packages.controller;
 
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -34,7 +35,9 @@ import com.lms.packages.service.EmailSenderService;
 import com.lms.packages.model.ConfirmationToken;
 
 import com.lms.packages.repository.ConfirmationTokenRepository;
-
+import com.lms.packages.payload.request.ConfirmPassword;
+import com.lms.packages.payload.request.ForgotEmailRequest;
+import com.lms.packages.payload.request.ForgotToken;
 import com.lms.packages.payload.request.LoginRequest;
 import com.lms.packages.payload.request.SignupRequest;
 import com.lms.packages.payload.response.JwtResponse;
@@ -144,15 +147,9 @@ public class AuthController {
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
 	
-	@RequestMapping(value="/forgot-password", method=RequestMethod.GET)
-	public ModelAndView displayResetPassword(ModelAndView modelAndView, Person person) {
-		modelAndView.addObject("person", person);
-		modelAndView.setViewName("forgotPassword");
-		return modelAndView;
-	}
 	
 	@RequestMapping(value="/forgot-password", method=RequestMethod.POST)
-	public ResponseEntity<?> forgotUserPassword(@RequestBody String email) {
+	public ResponseEntity<?> forgotUserPassword(@RequestBody ForgotEmailRequest request) {
 		//Person existingPerson = personRepository.findByEmailIgnoreCase(person.getEmail());
 		//if(existingPerson != null) {
 			// create token
@@ -162,15 +159,14 @@ public class AuthController {
 			//confirmationTokenRepository.save(confirmationToken);
 			
 			// create the email
+			
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
-			//mailMessage.setTo(existingPerson.getEmail());
-			mailMessage.setTo(email);
+			mailMessage.setTo(request.getEmail());
 			mailMessage.setSubject("Complete Password Reset!");
 			
 			//mailMessage.setText("To complete the password reset process, please click here: "
 			//+"http://localhost:8080/confirm-reset?token="+confirmationToken.getConfirmationToken());
-			mailMessage.setText("To complete the password reset process, please click here: "
-					+"http://localhost:8080/confirm-reset?token=");
+			mailMessage.setText("To complete the password reset process, please Enter the Otp ");
 			emailSenderService.sendEmail(mailMessage);
 
 			
@@ -185,32 +181,29 @@ public class AuthController {
 	}
 
 
-	@RequestMapping(value="/confirm-reset", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView validateResetToken(ModelAndView modelAndView, @RequestParam("token")String confirmationToken)
+	@RequestMapping(value="/confirm-reset", method= RequestMethod.POST)
+	public ModelAndView validateResetToken( @RequestBody ForgotToken token)
 	{
-		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+		ConfirmationToken token1 = confirmationTokenRepository.findByConfirmationToken(token.getToken());
 		
-		if(token != null) {
-			Person person = personRepository.findByEmailIgnoreCase(token.getPerson().getEmail());
+		if(token1 != null) {
+			Person person = personRepository.findByEmailIgnoreCase(token1.getPerson().getEmail());
 			//person.setEnabled(true);
 			personRepository.save(person);
-			modelAndView.addObject("person", person);
-			modelAndView.addObject("emailId", person.getEmail());
-			modelAndView.setViewName("resetPassword");
+			
 		} else {
-			modelAndView.addObject("message", "The link is invalid or broken!");
-			modelAndView.setViewName("error");
+			
 		}
 		
-		return modelAndView;
+		return new ModelAndView("redirect:http://localhost:3000/forgot");
 	}	
 
 	
 	@RequestMapping(value = "/reset-password", method = RequestMethod.POST)
-	public ModelAndView resetUserPassword(ModelAndView modelAndView, Person person) {
+	public ModelAndView resetUserPassword(@RequestBody ConfirmPassword password) {
 		// ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-		
-		if(person.getEmail() != null) {
+		 
+		/*if(person.getEmail() != null) {
 			// use email to find user
 			Person tokenUser = personRepository.findByEmailIgnoreCase(person.getEmail());
 			//tokenUser.setEnabled(true);
@@ -223,8 +216,9 @@ public class AuthController {
 			modelAndView.addObject("message","The link is invalid or broken!");
 			modelAndView.setViewName("error");
 		}
+		*/
 		
-		return modelAndView;
+		return new ModelAndView();
 	}
 	
 	
