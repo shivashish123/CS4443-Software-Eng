@@ -3,6 +3,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../services/auth.service";
+import logo from "../login.png";
+import "../App.css";
 
 export default class Login extends Component{  
     constructor(props) {
@@ -44,7 +46,7 @@ export default class Login extends Component{
       if (this.checkBtn.context._errors.length === 0) {
         AuthService.login(this.state.emailID, this.state.password).then(
           () => {            
-            this.props.history.push("/");
+            this.props.history.push("/profile");
             window.location.reload();
           },
           error => {
@@ -73,7 +75,7 @@ export default class Login extends Component{
         <div className="col-md-12">
           <div className="card card-container">
             <img
-              src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+              src={logo}
               alt="profile-img"
               className="profile-img-card"
             />
