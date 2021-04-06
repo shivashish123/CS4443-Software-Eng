@@ -1,22 +1,36 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 
 import UserService from "../services/user.service";
-import Dropdown from 'react-dropdown';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonGroup } from 'reactstrap';
 
 export default class BoardAdmin extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      content: ""
+      content: "",
+      showStaff: false,
+      showFine: false,
     };
+    this.toggleStaffMenu = this.toggleStaffMenu.bind(this);
+    this.toggleFineMenu = this.toggleFineMenu.bind(this);
+  }
+  
+  toggleStaffMenu() {
+    this.setState({ showStaff: !this.state.showStaff });
+  }
+
+  toggleFineMenu() {
+    this.setState({ showFine: !this.state.showFine });
   }
 
   componentDidMount() {
     UserService.getAdminBoard().then(
       response => {
         this.setState({
-          content: response.data
+          content: response.data,
+          
         });
       },
       error => {
@@ -34,11 +48,40 @@ export default class BoardAdmin extends Component {
 
   render() {
     return (
-      <div className="container">
-        <button> Issue Book</button>
-        <button> Add a book</button>
-        <button> Remove a book</button>
-        <button> Place order for book</button>
+      <div>
+        <ButtonGroup class="button-grp">
+        <Dropdown  isOpen={this.state.showStaff} toggle={this.toggleStaffMenu} >
+          <DropdownToggle caret color="success" size="lg">
+            Staff
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem tag={Link} to="/">Add Staff</DropdownItem>
+            <DropdownItem tag={Link} to="/">Remove Staff</DropdownItem>
+            <DropdownItem tag={Link} to="/">Staff Info</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+        &nbsp;&nbsp;&nbsp;
+        <Dropdown isOpen={this.state.showFine} toggle={this.toggleFineMenu}>
+          <DropdownToggle caret color="success" size="lg">
+            Fine Rules
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem tag={Link} to="/">View Rules</DropdownItem>
+            <DropdownItem tag={Link} to="/">Update Rules</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+        </ButtonGroup>
+        &nbsp;&nbsp;&nbsp;
+        <button class="menuAD2">
+          User History
+        </button>
+        
+        <div className="container">
+          <button className="menuAD"> Issue Book</button>&nbsp;&nbsp;&nbsp;
+          <button className="menuAD"> Add a book</button>&nbsp;&nbsp;&nbsp;
+          <button className="menuAD"> Remove a book</button>&nbsp;&nbsp;&nbsp;
+          <button className="menuAD"> Place order for book</button>
+        </div>
       </div>
     );
   }
