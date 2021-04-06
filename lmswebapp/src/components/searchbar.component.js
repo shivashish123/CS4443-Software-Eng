@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+import Button from 'react-bootstrap/Button'
 import Select from 'react-select';
 import Form from "react-validation/build/form";
 import Searchservice from "../services/search.service"
@@ -34,7 +34,7 @@ export default class SearchBar extends Component {
     }
 
     onChangeSortBy = selectedOption => {
-        this.setState({ selectedOption });
+        this.setState({ sortBy :selectedOption.value });
         console.log(`Option selected:`, selectedOption);
     };
 
@@ -48,8 +48,7 @@ export default class SearchBar extends Component {
 
         console.log("checked")
 
-        if (this.checkBtn.context._errors.length === 0) {
-             
+                    
             Searchservice.searchBooks(
               this.state.keyword,
               this.state.sortBy
@@ -74,7 +73,7 @@ export default class SearchBar extends Component {
                 });
               }
             );
-          }
+          
     }
 
     render(){
@@ -85,28 +84,29 @@ export default class SearchBar extends Component {
                     ref={c => {
                         this.form = c;
                     }}
-                >
-                <div class="searchBar">                                
+                >              
+                <div class="search">
+                  <div>
                  <Input
                     type="text"
-                    className="form-control"
+                    className="searchTerm"
                     name="keyword"
                     placholder="Enter a keyword"
                     value={this.state.keyword}
                     onChange={this.onChangeKeyword}
-                  />              
-                
+                  /> 
+                  </div>             
+                  <div>
                   <Select
                     value={this.sortBy}
+                    className ="searchSelect"
                     onChange={this.onChangeSortBy}
                     options={sortByOptions}
-                 />
-                 <CheckButton
-                    style={{ display: "block" }}
-                    ref={c => {
-                    this.checkBtn = c;
-                    }}
-                 /> 
+                  />
+                  </div>
+                  <div>
+                    <Button variant="secondary" type="submit">Search</Button>
+                 </div>
                  </div>
             </Form>            
             </div>
