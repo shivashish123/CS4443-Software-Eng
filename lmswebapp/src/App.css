@@ -9,3 +9,7 @@
   font-size: calc(2vmin);
   color: black;
 }
+.searchBar{
+  display: flex;
+  flex-direction: row;
+}
