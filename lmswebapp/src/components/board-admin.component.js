@@ -75,6 +75,10 @@ export default class BoardAdmin extends Component {
         <button class="menuAD2">
           User History
         </button>
+        &nbsp;&nbsp;&nbsp;
+        <button class="menuAD2">
+          Add Admin
+        </button>
         
         <div className="container">
           <button className="menuAD"> Issue Book</button>&nbsp;&nbsp;&nbsp;
