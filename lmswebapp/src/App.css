@@ -123,3 +123,12 @@ label {
   margin: 10px 0px;
   cursor: pointer;
 }
+
+.flexbox1{
+  display: flex;
+  direction: row;
+}
+
+.hidden{
+  visibility: hidden;
+}
