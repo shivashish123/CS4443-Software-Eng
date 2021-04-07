@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import AuthService from "./services/auth.service";
-
+import Forgot from "./components/forgot";
 import Login from "./components/login.component";
 import Signup from "./components/signup.component";
 import Home from "./components/home.component";
@@ -101,6 +101,11 @@ class App extends Component {
                     Sign Up
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to={"/forgot"} className="nav-link">
+                    Forgot Password
+                  </Link>
+                </li>
               </div>
             )}
           </nav>
@@ -114,6 +119,7 @@ class App extends Component {
               <Route exact path="/admin" component={BoardAdmin} />
               <Route exact path="/user" component={BoardUser} />
               <Route exact path="/addbook" component={AddBook} />
+              <Route exact path="/forgot" component={Forgot} />
             </Switch>
           </div>
         </div>
