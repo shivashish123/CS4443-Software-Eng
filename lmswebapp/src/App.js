@@ -11,7 +11,7 @@ import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardAdmin from "./components/board-admin.component";
 import BoardUser from "./components/board-user.component";
-
+import AddBook from "./components/addBook.component"
 class App extends Component {
   constructor(props) {
     super(props);
@@ -113,6 +113,7 @@ class App extends Component {
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/admin" component={BoardAdmin} />
               <Route exact path="/user" component={BoardUser} />
+              <Route exact path="/addbook" component={AddBook} />
             </Switch>
           </div>
         </div>

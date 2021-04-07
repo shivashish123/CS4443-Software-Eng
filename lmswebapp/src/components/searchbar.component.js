@@ -105,7 +105,7 @@ export default class SearchBar extends Component {
                     type="text"
                     className="searchTerm"
                     name="keyword"
-                    placholder="Enter a keyword"
+                    placeholder="Enter a keyword"
                     value={this.state.keyword}
                     onChange={this.onChangeKeyword}
                   /> 
