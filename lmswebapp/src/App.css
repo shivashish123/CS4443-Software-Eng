@@ -29,6 +29,9 @@ label {
   max-width: 400px !important;
   padding: 40px 40px;
 }
+.authorInput{
+  max-width: 200px;  
+}
 
 .card {
   background-color: #f7f7f7;

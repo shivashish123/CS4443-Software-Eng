@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import Button from "react-validation/build/button";
-import { useState } from "react";
+import Select from 'react-select';
 import AddBookService from "../services/addBook.service";
 const required = value => {
     if (!value) {
@@ -13,22 +12,45 @@ const required = value => {
       );
     }
 };
+const GenreOptions = [
+    { value: 'Fiction', label: 'Fiction' },
+    { value: 'Mystery', label: 'Mystery' },
+    { value: 'Science', label: 'Science' }
+];
+
+const SubGenreOptions = 
+    {"Fiction" :[
+        { value: 'Fiction1', label: 'Fiction1' },
+        { value: 'Fiction2', label: 'Fiction2' },
+        { value: 'Fiction3', label: 'Fiction3' }],
+
+        "Mystery" :[
+            { value: 'Mystery1', label: 'Mystery1' },
+            { value: 'Mystery2', label: 'Mystery2' },
+            { value: 'Mystery3', label: 'Mystery3' }]        
+    }
+;
 
 export default class AddBook extends Component {
     constructor(props){
         super(props)
         this.onChangeTitle = this.onChangeTitle.bind(this)
-        this.onChangeName = this.onChangeName.bind(this)
         this.onAddItem = this.onAddItem.bind(this)
         this.onRemoveItem = this.onRemoveItem.bind(this)
         this.onChangePublisher = this.onChangePublisher.bind(this)
         this.onChangeCopies = this.onChangeCopies.bind(this)
+        this.onupdateInput = this.onupdateInput.bind(this)
+        this.onChangeGenre  = this.onChangeGenre.bind(this);
+        this.onChangeSubGenre  = this.onChangeSubGenre.bind(this);
+        console.log(SubGenreOptions["Fiction"])
         this.state = {
            title : "" ,
-           list : [{ name :" " }],
+           list : [],
            publisher: "",
            copies: 0 ,
-           temp :""
+           newItem :"",
+           Genre: "",
+           subGenre: "",
           };
           
     }
@@ -48,33 +70,38 @@ export default class AddBook extends Component {
           publisher: e.target.value
         });
     }
-
-    onChangeName(e,idx) {     
-        this.setState(state => {     
-            const list = [...state.list];
-            list[idx]["name"] =  e.target.value;
-            return{
-                list
-            };
-        });       
+    onupdateInput(e){
+        this.setState({
+            newItem: e.target.value
+          });
     }
-    onAddItem = () => {
-        this.setState(state => {
-          const list = [...state.list, {name:""}];
-          return {
-            list
-          };
-        })
+
+    onChangeGenre = selectedOption => {
+        this.setState({ Genre :selectedOption.value });
+    };
+
+    onChangeSubGenre = selectedOption => {
+        this.setState({ subGenre :selectedOption.value });
+    };
+     
+    onAddItem = (newValue) => {
+        if(newValue !== ""){
+            this.setState(state => {
+            const list = [...state.list, {value:newValue,id:Date.now()}];
+            return {
+                list,
+                newItem:""
+            };
+            })
+        }   
     }; 
 
-    onRemoveItem = (e,idx)=>{
+    onRemoveItem = (id)=>{
+        console.log(id)
         this.setState(state => {
-            //var list = state.list.filter((item, j) => idx !== j);      
-            var list = [...state.list];
-            list.splice(idx, 1);
-            return {
-              list
-            };
+            const list = [...state.list];
+            const updatedList = list.filter(item=> item.id !== id);
+            this.setState({list:updatedList})
           });  
           
     }
@@ -105,55 +132,80 @@ export default class AddBook extends Component {
                         validations={[required]}
                         />
                     </div>
-                        <label htmlFor="Author">Author</label>
-                        {this.state.list.map((x, i) => (
+                    <label htmlFor="Author">Author</label>
+                    <div class="flexbox1">
+                    <input
+                        type="text"
+                        placeholder="Author Name"
+                        className = "authorInput"
+                        required
+                        value = {this.state.newItem}
+                        onChange = {this.onupdateInput}
+                    />
+                    <button
+                    onClick ={()=>this.onAddItem(this.state.newItem)} 
+                    disabled = {!this.state.newItem.length}
+                    >
+                    Add Author
+                    </button>
+                    </div>
+                    <div>
+                    {this.state.list.map((x) => (
+                            <li key={x.id}>                               
+                            {x.value}
+                            <button
+                                onClick={()=>this.onRemoveItem(x.id)}
+                            > Remove
+                            </button>
+                            </li>
+                        )
+                    )}  
+                    </div>                        
+                    <div className="form-group">
+                        <label htmlFor="Publisher">Publisher</label>
+                        <Input
+                        type="text"
+                        className="form-control"
+                        name="Publisher"
+                        value={this.state.publisher}
+                        onChange={this.onChangePublisher}
+                        />
+                    </div>
 
-                            <div class="flexbox1">
-                                <Input
-                                type="text"
-                                className="form-control"                                
-                                name="Author"
-                                value={x.name}   
-                                onChange={(e)=>this.onChangeName(e,i)}                        
-                                validations={[required]}
-                                />    
-                                
-                                <div >
-                                    {this.state.list.length !== 1 && <button type="button"  onClick={(e)=>this.onRemoveItem(e,i)}>X</button>}                                    
-                                    {this.state.list.length === 1 && <button type="button" class="hidden" >X</button>}
-                                    {i === (this.state.list.length-1) && <button type="button" onClick={this.onAddItem}>Add</button>}
-                                    {i !== (this.state.list.length-1) && <button type="button" class="hidden" >Add</button>}
-                               
-                                </div>
-                            </div>
-
-                        ))}
-                         <div className="form-group">
-                            <label htmlFor="Publisher">Publisher</label>
-                            <Input
-                            type="text"
-                            className="form-control"
-                            name="Publisher"
-                            value={this.state.publisher}
-                            onChange={this.onChangePublisher}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="Copies">Copies</label>
-                            <Input
-                            type="number"
-                            className="form-control"
-                            name="Copies"
-                            value={this.state.copies}
-                            onChange={this.onChangeCopies}
-                            />
-                        </div>                        
+                    <div className="form-group">
+                        <label htmlFor="Copies">Copies</label>
+                        <Input
+                        type="number"
+                        className="form-control"
+                        name="Copies"
+                        value={this.state.copies}
+                        onChange={this.onChangeCopies}
+                        />
+                    </div>  
+                    
+                    <div>
+                    <label htmlFor="Genre">Genre</label>    
+                    <Select
+                        value={this.Genre}
+                        className ="Genre"
+                        placeholder ="Genre"
+                        onChange={this.onChangeGenre}                        
+                        options={GenreOptions}
+                    />   
+                    </div>
+                    <label htmlFor="SubGenre">Sub-Genre</label>
+                    <Select
+                        value={this.subGenre}
+                        className ="SubGenre"
+                        placeholder ="SubGenre"
+                        onChange={this.onChangeGenre}                        
+                        options={SubGenreOptions[this.state.Genre]}
+                    />                      
 
                     <button type="submit">Add Book</button>
                     </Form>
-                    <div style={{ marginTop: 20 }}>{JSON.stringify(this.state.list)}</div>
-                    <div style={{ marginTop: 20 }}>{JSON.stringify(this.state.copies)}</div>
+                    {/* <div style={{ marginTop: 20 }}>{JSON.stringify(this.state.list)}</div>
+                    <div style={{ marginTop: 20 }}>{JSON.stringify(this.state.copies)}</div> */}
                 </div>
               </div>
         );
