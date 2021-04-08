@@ -55,7 +55,7 @@ export default class BoardAdmin extends Component {
             Staff
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem tag={Link} to="/">Add Staff</DropdownItem>
+            <DropdownItem tag={Link} to="/addstaff">Add Staff</DropdownItem>
             <DropdownItem tag={Link} to="/">Remove Staff</DropdownItem>
             <DropdownItem tag={Link} to="/">Staff Info</DropdownItem>
           </DropdownMenu>

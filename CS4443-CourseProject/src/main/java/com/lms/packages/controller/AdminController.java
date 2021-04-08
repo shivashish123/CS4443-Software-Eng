@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,6 +31,7 @@ import com.lms.packages.security.services.UserDetailsImpl;
 import com.lms.packages.payload.request.LoginRequest;
 import com.lms.packages.payload.request.SearchRequest;
 import com.lms.packages.payload.request.StaffSignupRequest;
+import com.lms.packages.payload.request.StaffRemoveRequest;
 import com.lms.packages.payload.response.JwtResponse;
 import com.lms.packages.payload.response.MessageResponse;
 import com.lms.packages.security.jwt.JwtUtils;
@@ -54,14 +56,9 @@ public class AdminController {
 	JwtUtils jwtUtils;
 
 	@PostMapping("/add-staff")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> addStaff(@Valid @RequestBody StaffSignupRequest staffSignupRequest) {
 		
-		if (staffRepository.existsByUsername(staffSignupRequest.getUsername())) {
-			return ResponseEntity
-					.badRequest()
-					.body(new MessageResponse("Error: Username is already taken!"));
-		}
-
 		if (staffRepository.existsByEmail(staffSignupRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
@@ -75,9 +72,20 @@ public class AdminController {
 	}
 	
 	
-	@PostMapping("/remove-staff")	
-	public ResponseEntity<?> registerUser() {
-		return ResponseEntity.ok(new MessageResponse("Staff member removed successfully!"));
+	@PostMapping("/remove-staff")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> removeStaff(@Valid @RequestBody StaffRemoveRequest staffRemoveRequest) {
+		int deletedRecords = staffRepository.deleteByEmail(staffRemoveRequest.getEmail());
+		if(deletedRecords==1)
+			return ResponseEntity.ok(new MessageResponse("Staff member removed successfully!"));
+		else
+			return ResponseEntity.ok(new MessageResponse("No staff member with given emailID exists!"));
+	}
+	
+	@PostMapping("/info-staff")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> getAllStaff() {
+		return ResponseEntity.ok(new MessageResponse("Staff "));
 	}
 	
 
