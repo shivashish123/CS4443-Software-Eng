@@ -1,6 +1,6 @@
 package com.lms.packages.repository;
 
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -24,4 +24,6 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
     @Query("delete from Staff s where s.email = ?1")
 	@Transactional
 	int deleteByEmail(String email);
+	
+	List<Staff> findAll();
 }

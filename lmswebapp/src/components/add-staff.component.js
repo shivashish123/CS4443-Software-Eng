@@ -99,7 +99,7 @@ export default class AddStaff extends Component {
 
   handleRegister(e) {
     e.preventDefault();
-
+    console.log("Hello");
     this.setState({
       message: "",
       successful: false
@@ -140,7 +140,6 @@ export default class AddStaff extends Component {
   }
 
   render() {
-    console.log("Hello");
     return (
       <div className="col-md-12">
         <div className="card card-container">

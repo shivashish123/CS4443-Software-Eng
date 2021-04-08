@@ -13,6 +13,7 @@ import BoardAdmin from "./components/board-admin.component";
 import BoardUser from "./components/board-user.component";
 import AddBook from "./components/addBook.component";
 import AddStaff from "./components/add-staff.component";
+import RemoveStaff from "./components/remove-staff.component";
 
 class App extends Component {
   constructor(props) {
@@ -122,6 +123,7 @@ class App extends Component {
               <Route exact path="/user" component={BoardUser} />
               <Route exact path="/addbook" component={AddBook} />
               <Route exact path="/addstaff" component={AddStaff} />
+              <Route exact path="/removestaff" component={RemoveStaff} />
               <Route exact path="/forgot" component={Forgot} />
             </Switch>
           </div>

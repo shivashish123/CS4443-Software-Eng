@@ -85,7 +85,8 @@ public class AdminController {
 	@PostMapping("/info-staff")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllStaff() {
-		return ResponseEntity.ok(new MessageResponse("Staff "));
+		List<Staff> entities = staffRepository.findAll();
+		return ResponseEntity.ok(entities);
 	}
 	
 
