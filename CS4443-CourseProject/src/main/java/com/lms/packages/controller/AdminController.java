@@ -56,9 +56,9 @@ public class AdminController {
 	JwtUtils jwtUtils;
 
 	@PostMapping("/add-staff")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> addStaff(@Valid @RequestBody StaffSignupRequest staffSignupRequest) {
-		
+		System.out.println("here");
 		if (staffRepository.existsByEmail(staffSignupRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
@@ -73,7 +73,7 @@ public class AdminController {
 	
 	
 	@PostMapping("/remove-staff")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> removeStaff(@Valid @RequestBody StaffRemoveRequest staffRemoveRequest) {
 		int deletedRecords = staffRepository.deleteByEmail(staffRemoveRequest.getEmail());
 		if(deletedRecords==1)
@@ -83,7 +83,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/info-staff")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllStaff() {
 		return ResponseEntity.ok(new MessageResponse("Staff "));
 	}
