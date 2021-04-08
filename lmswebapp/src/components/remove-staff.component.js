@@ -28,11 +28,11 @@ export default class RemoveStaff extends Component {
 
     handleRemoveStaff(e){
         e.preventDefault();
-        console.log("Hello");
         this.setState({
           message: "",
           successful: false
         });
+        console.log("remove staff")
 
         if (this.checkBtn.context._errors.length === 0) {  
 

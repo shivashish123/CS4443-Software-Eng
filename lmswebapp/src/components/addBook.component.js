@@ -12,6 +12,7 @@ const required = value => {
       );
     }
 };
+
 const GenreOptions = [
     { value: 'Fiction', label: 'Fiction' },
     { value: 'Mystery', label: 'Mystery' },
@@ -42,7 +43,7 @@ export default class AddBook extends Component {
         this.onupdateInput = this.onupdateInput.bind(this)
         this.onChangeGenre  = this.onChangeGenre.bind(this);
         this.onChangeSubGenre  = this.onChangeSubGenre.bind(this);
-        console.log(SubGenreOptions["Fiction"])
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
            title : "" ,
            list : [],
@@ -78,10 +79,12 @@ export default class AddBook extends Component {
 
     onChangeGenre = selectedOption => {
         this.setState({ Genre :selectedOption.value });
+        console.log(this.state.Genre)
     };
 
     onChangeSubGenre = selectedOption => {
         this.setState({ subGenre :selectedOption.value });
+        console.log(this.state.subGenre)
     };
      
     onAddItem = (newValue) => {
@@ -108,7 +111,34 @@ export default class AddBook extends Component {
     
     handleSubmit(e){
         e.preventDefault();
-        AddBookService.addBook()
+        AddBookService.addBook(
+            this.state.title,
+            this.state.list,
+            this.state.publisher,
+            this.state.copies,
+            this.state.Genre,
+            this.state.subGenre
+        ).then(
+            response => {
+              this.setState({
+                message: response.data.message,
+                successful: true
+              });
+            },
+            error => {
+              const resMessage =
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString();
+    
+              this.setState({
+                successful: false,
+                message: resMessage
+              });
+            }
+          );
     }
 
     render(){
@@ -138,7 +168,6 @@ export default class AddBook extends Component {
                         type="text"
                         placeholder="Author Name"
                         className = "authorInput"
-                        required
                         value = {this.state.newItem}
                         onChange = {this.onupdateInput}
                     />
@@ -198,11 +227,13 @@ export default class AddBook extends Component {
                         value={this.subGenre}
                         className ="SubGenre"
                         placeholder ="SubGenre"
-                        onChange={this.onChangeGenre}                        
+                        onChange={this.onChangeSubGenre}                        
                         options={SubGenreOptions[this.state.Genre]}
                     />                      
 
-                    <button type="submit">Add Book</button>
+                    <button type="submit" 
+                    disabled = {!this.state.list.length}
+                    >Add Book</button>
                     </Form>
                     {/* <div style={{ marginTop: 20 }}>{JSON.stringify(this.state.list)}</div>
                     <div style={{ marginTop: 20 }}>{JSON.stringify(this.state.copies)}</div> */}
