@@ -38,7 +38,7 @@ import com.lms.packages.security.jwt.JwtUtils;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/auth")
 public class AdminController {
 	@Autowired
 	AuthenticationManager authenticationManager;

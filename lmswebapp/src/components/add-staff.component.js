@@ -5,7 +5,7 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 import logo from "../login.png";
 import "../App.css";
-import AuthService from "../services/auth.service";
+import StaffService from "../services/staff.service";
 
 const required = value => {
   if (!value) {
@@ -108,7 +108,8 @@ export default class AddStaff extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.register(
+      
+      StaffService.register(
         this.state.username,
         this.state.email,
         this.state.address,
@@ -139,6 +140,7 @@ export default class AddStaff extends Component {
   }
 
   render() {
+    console.log("Hello");
     return (
       <div className="col-md-12">
         <div className="card card-container">
