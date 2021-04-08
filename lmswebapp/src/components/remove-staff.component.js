@@ -65,7 +65,7 @@ export default class RemoveStaff extends Component {
     render(){
         return(
             <div>
-              <h3 class="SearchHeading">Remove Staff Member</h3>
+              <h3 class="SerachHeading">Remove Staff Member</h3>
                 <Form
                     onSubmit={this.handleRemoveStaff}
                     ref={c => {
@@ -79,9 +79,25 @@ export default class RemoveStaff extends Component {
                     placeholder="Enter email ID of the staff"
                     value={this.state.email}
                     onChange={this.onChangeEmail}
+                    style={{width: "400px"}}
                   />   
-                    <Button variant="secondary" type="submit">Remove Staff</Button>
+                  &nbsp;&nbsp;&nbsp;
+                    <Button variant="secondary" type="submit" size="large">Remove Staff</Button>
                  </div>
+                 {this.state.message && (
+                    <div className="form-group">
+                        <div
+                        className={
+                            this.state.successful
+                            ? "alert alert-success"
+                            : "alert alert-danger"
+                        }
+                        role="alert"
+                        >
+                        {this.state.message}
+                        </div>
+                    </div>
+                    )}
                  <CheckButton
                     style={{ display: "none" }}
                     ref={c => {
