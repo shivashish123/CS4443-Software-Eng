@@ -19,6 +19,7 @@ import com.lms.packages.model.Author;
 import com.lms.packages.model.Book;
 import com.lms.packages.model.Publisher;
 import com.lms.packages.payload.request.AddBookRequest;
+import com.lms.packages.payload.request.RemoveBookRequest;
 import com.lms.packages.payload.request.StaffSignupRequest;
 import com.lms.packages.repository.AuthorRepository;
 import com.lms.packages.repository.BookRepository;
@@ -89,6 +90,15 @@ public class BookController {
 		
 		
 		return null;
+	}
+	
+	@PostMapping("/remove-book")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> removeBook(@Valid @RequestBody RemoveBookRequest removeBookRequest) {
+		
+		System.out.println(removeBookRequest.getId());		
+		bookRepository.deleteById(removeBookRequest.getId());
+		return null;	
 	}
 
 }

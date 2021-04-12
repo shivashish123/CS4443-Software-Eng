@@ -83,7 +83,7 @@ export default class BoardAdmin extends Component {
         <div className="container">
           <button className="menuAD"> Issue Book</button>&nbsp;&nbsp;&nbsp;
           <button className="menuAD"><a href="/addBook">Add a book</a></button>&nbsp;&nbsp;&nbsp;
-          <button className="menuAD"> Remove a book</button>&nbsp;&nbsp;&nbsp;
+          <button className="menuAD"><a href="/removeBook"> Remove a book</a></button>&nbsp;&nbsp;&nbsp;
           <button className="menuAD" > Place order for book</button>
         </div>
       </div>

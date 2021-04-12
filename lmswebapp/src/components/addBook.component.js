@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from 'react-select';
-import AddBookService from "../services/addBook.service";
+import BookService from '../services/book.service'
+
 const required = value => {
     if (!value) {
       return (
@@ -111,7 +112,7 @@ export default class AddBook extends Component {
     
     handleSubmit(e){
         e.preventDefault();
-        AddBookService.addBook(
+        BookService.addBook(
             this.state.title,
             this.state.list,
             this.state.publisher,

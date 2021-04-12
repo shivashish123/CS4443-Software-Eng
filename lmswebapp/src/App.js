@@ -12,6 +12,7 @@ import Profile from "./components/profile.component";
 import BoardAdmin from "./components/board-admin.component";
 import BoardUser from "./components/board-user.component";
 import AddBook from "./components/addBook.component";
+import RemoveBook from "./components/removeBook.component";
 import AddStaff from "./components/add-staff.component";
 import RemoveStaff from "./components/remove-staff.component";
 
@@ -122,6 +123,7 @@ class App extends Component {
               <Route exact path="/admin" component={BoardAdmin} />
               <Route exact path="/user" component={BoardUser} />
               <Route exact path="/addbook" component={AddBook} />
+              <Route exact path="/removebook" component={RemoveBook} />
               <Route exact path="/addstaff" component={AddStaff} />
               <Route exact path="/removestaff" component={RemoveStaff} />
               <Route exact path="/forgot" component={Forgot} />

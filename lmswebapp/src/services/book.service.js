@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from './auth.header';
 const API_URL = "http://localhost:8080/api/auth/";
-class AddBookService {
+class BookService {
     addBook( title,authorList,publisher,copies,genre,subGenre) {
       console.log(authorList)
       console.log(genre)
@@ -20,6 +20,13 @@ class AddBookService {
         subGenre
       }, { headers: authHeader() });
     }
+
+    removeBook(id){
+      console.log(id);
+      return axios.post(API_URL + "remove-book",{
+        id
+      }, { headers: authHeader() });
+    }
 }
 
-export default new AddBookService();
+export default new BookService();
