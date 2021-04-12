@@ -19,4 +19,18 @@ public class WebPageController {
 		System.out.println("admin page");
 		return ResponseEntity.ok(new MessageResponse("Access Granted"));
 	}	
+	
+	@GetMapping("/addBook")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<MessageResponse> addBookPageAccess() {
+		System.out.println("add Book page");
+		return ResponseEntity.ok(new MessageResponse("Access Granted"));
+	}	
+	
+	@GetMapping("/removeBook")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<MessageResponse> removeBookPageAccess() {
+		System.out.println("remove Book page");
+		return ResponseEntity.ok(new MessageResponse("Access Granted"));
+	}	
 }

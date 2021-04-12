@@ -17,7 +17,7 @@ import com.lms.packages.payload.request.SearchRequest;
 public class SearchController {
 
 		
-	@PostMapping("/search")
+	@PostMapping("/search-book")
 	public ResponseEntity<?> searchByKeyword(@Valid @RequestBody SearchRequest searchRequest){
 		
 		System.out.println(searchRequest.getKeyword());

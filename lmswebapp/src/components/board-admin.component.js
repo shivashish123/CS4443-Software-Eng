@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
-import PageService from "../services/page.service";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonGroup ,Button } from 'reactstrap';
-import ErrorComponent from "./error.component"
+import PageService from "../services/page.service";
+import ErrorComponent from "./error.component";
 export default class BoardAdmin extends Component {
   constructor(props) {
     super(props);
@@ -101,8 +101,7 @@ export default class BoardAdmin extends Component {
           <Button className="menuAD" tag={Link} to="/removeBook">Remove a book</Button>&nbsp;&nbsp;&nbsp;
           <button className="menuAD" > Place order for book</button>
         </div>
-        </div>
-        }
+        </div>        
       </div>
     );
     }

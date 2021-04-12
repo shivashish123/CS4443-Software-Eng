@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from './auth.header';
 
-const API_URL = "http://localhost:8080/api/auth/search";
+const API_URL = "http://localhost:8080/api/search";
 
 class SearchService{
     searchBooks(keyword,searchBy,sortBy){
@@ -9,7 +9,7 @@ class SearchService{
         console.log(searchBy)
         console.log(sortBy)
         return axios
-        .post(API_URL , {
+        .post(API_URL +"/search-book", {
           keyword,
           searchBy,
           sortBy

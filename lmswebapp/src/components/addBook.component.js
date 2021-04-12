@@ -3,6 +3,8 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Select from 'react-select';
 import BookService from '../services/book.service'
+import PageService from "../services/page.service";
+import ErrorComponent from "./error.component";
 
 const required = value => {
     if (!value) {
@@ -53,6 +55,7 @@ export default class AddBook extends Component {
            newItem :"",
            Genre: "",
            subGenre: "",
+           authorized: 0
           };
           
     }
@@ -141,8 +144,41 @@ export default class AddBook extends Component {
             }
           );
     }
-
-    render(){
+    componentDidMount() {
+        PageService.getAddBookPage().then(
+          response => {
+            console.log("authorized")
+            this.setState({
+              authorized : 2
+            });
+          },
+          error => {
+            console.log("error")
+            this.setState({
+              content:
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString() ,
+              authorized : 1
+            });
+          }
+        );
+      }
+    
+      render() {  
+        if(this.state.authorized === 1){
+          return(
+            <ErrorComponent/>
+          )
+        }
+        else if(this.state.authorized == 0){
+          return(
+            <div></div>
+          )
+        }
+        else {  
         return(
             <div className="col-md-12">
                 <div className="card card-container">
@@ -240,6 +276,7 @@ export default class AddBook extends Component {
                     <div style={{ marginTop: 20 }}>{JSON.stringify(this.state.copies)}</div> */}
                 </div>
               </div>
-        );
+            );
+        }
     }
 }
