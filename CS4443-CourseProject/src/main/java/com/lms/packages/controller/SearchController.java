@@ -13,7 +13,7 @@ import com.lms.packages.payload.request.SearchRequest;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/search")
 public class SearchController {
 
 		
