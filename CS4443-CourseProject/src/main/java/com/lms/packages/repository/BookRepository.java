@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lms.packages.model.Author;
 import com.lms.packages.model.Book;
+import com.lms.packages.model.Staff;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
@@ -30,5 +31,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	@Query("update Book b set b.totalCopies = ?2 + b.totalCopies where b.bookId= ?1")
 	@Transactional
 	void updateCopies(String id, int count);
+	
+	//@Query("select b from Book b ")
+	List<Book> findAll();
 
 }

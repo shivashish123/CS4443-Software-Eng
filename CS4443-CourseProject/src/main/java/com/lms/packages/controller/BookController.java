@@ -126,11 +126,15 @@ public class BookController {
 	Resource downloadImage(@Valid @RequestBody ShowBookRequest showBookRequest) {
 		
 		System.out.println(showBookRequest.getId());
-	    byte[] image = bookRepository.findBybookId(showBookRequest.getId())
-	      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND))
-	      .getContent();
-
-	    return new ByteArrayResource(image);
+		Optional<Book> book = bookRepository.findBybookId(showBookRequest.getId());
+		
+		if(!book.isEmpty()) {
+			byte[] image = book.get().getContent();
+			return new ByteArrayResource(image);
+		}else {
+			return null;
+		}
+	    
 	}
 	
 	@PostMapping("/add-copies")

@@ -43,7 +43,7 @@ public class Book {
 	  inverseJoinColumns = @JoinColumn(name = "author_id"))	
 	private List<Author> authors;
 	
-	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)	
+	@ManyToOne(cascade=CascadeType.REMOVE)	
 	@JoinTable(name="book_publisher")
 	private Publisher publisher;
 	

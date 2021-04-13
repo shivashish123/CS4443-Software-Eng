@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import Select from 'react-select';
 import Form from "react-validation/build/form";
 import Searchservice from "../services/search.service"
-
+import GridComponent from "./grid.component"
 const sortByOptions = [
     { value: 'Rating', label: 'Rating' },
     { value: 'Popularity', label: 'Popularity' },
@@ -30,7 +30,10 @@ export default class SearchBar extends Component {
             sortBy: "Alpha",
             searchBy: "Book",
             message: "",
-            successful: false
+            successful: false,
+            searchList: [],
+            ratedList: [],
+            trendingList: []
         };
     }
  
@@ -67,9 +70,10 @@ export default class SearchBar extends Component {
               this.state.sortBy,
             ).then(
               response => {
+                console.log(response.data)
+                console.log("success")
                 this.setState({
-                  message: response.data.message,
-                  successful: true
+                  searchList: response.data
                 });
               },
               error => {
@@ -132,8 +136,12 @@ export default class SearchBar extends Component {
                     <Button variant="secondary" type="submit">Search</Button>
                  </div>
                  </div>
-            </Form>            
+            </Form>      
+
+            <GridComponent list={this.state.searchList}/>      
             </div>
+
+            
         );
     }
 
