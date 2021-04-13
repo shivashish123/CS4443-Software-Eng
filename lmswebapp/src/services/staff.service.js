@@ -20,6 +20,11 @@ class StaffService {
       email
     }, { headers: authHeader() });
   }
+
+  info(){
+    return axios.post(API_URL + "info-staff", {
+    }, { headers: authHeader() });
+  }
 }
 
 export default new StaffService();

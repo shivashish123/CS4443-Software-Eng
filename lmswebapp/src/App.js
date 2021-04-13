@@ -15,6 +15,7 @@ import AddBook from "./components/addBook.component";
 import RemoveBook from "./components/removeBook.component";
 import AddStaff from "./components/add-staff.component";
 import RemoveStaff from "./components/remove-staff.component";
+import StaffInfo from "./components/info-staff.component";
 
 class App extends Component {
   constructor(props) {
@@ -126,6 +127,7 @@ class App extends Component {
               <Route exact path="/removebook" component={RemoveBook} />
               <Route exact path="/addstaff" component={AddStaff} />
               <Route exact path="/removestaff" component={RemoveStaff} />
+              <Route exact path="/infostaff" component={StaffInfo} />
               <Route exact path="/forgot" component={Forgot} />
             </Switch>
           </div>

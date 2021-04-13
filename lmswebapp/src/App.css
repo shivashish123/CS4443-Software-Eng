@@ -149,3 +149,18 @@ label {
 .hidden{
   visibility: hidden;
 }
+
+
+.item {
+	font-size: 0.875rem;
+	line-height: 1.3125;
+	font-weight: 400;
+	color: #455b67;
+}
+
+.title {
+	font-weight: 700;
+	font-size: .74375rem;
+  color: #7290a0;
+	text-transform: uppercase;
+}
