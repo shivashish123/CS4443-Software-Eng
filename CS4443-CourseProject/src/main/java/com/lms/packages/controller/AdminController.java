@@ -119,25 +119,6 @@ public class AdminController {
 				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 		role = (adminRole);
 
-		/*if (strRole == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			role = userRole;
-		} else {
-			
-				switch (strRole) {
-				case "ROLE_ADMIN":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					role = (adminRole);
-
-					break;			
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					role = (userRole);
-				}		
-		}*/
 		
 		user.setRole(role);		
 		personRepository.save(user);
