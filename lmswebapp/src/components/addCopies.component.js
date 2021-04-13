@@ -7,15 +7,16 @@ import CheckButton from "react-validation/build/button";
 import PageService from "../services/page.service";
 import ErrorComponent from "./error.component";
 
-export default class RemoveBook extends Component {
+export default class AddCopies extends Component {
     constructor(props){
         super(props)
         this.onChangeId = this.onChangeId.bind(this);
-        this.handleRemoveBook = this.handleRemoveBook.bind(this);
-
+        this.handleAddCopies = this.handleAddCopies.bind(this);
+        this.onChangeNumber = this.onChangeNumber.bind(this);
         this.state = {
             id: "",
             message: "",
+            number : 0 ,
             successful: false
         };
     }
@@ -27,18 +28,25 @@ export default class RemoveBook extends Component {
         });
     }
 
-    handleRemoveBook(e){
+    onChangeNumber(e) {
+        this.setState({
+          number: e.target.value
+        });
+    }
+
+    handleAddCopies(e){
         e.preventDefault();
         this.setState({
           message: "",
           successful: false
         });
-        console.log("remove book")
+        console.log("add copies")
 
         if (this.checkBtn.context._errors.length === 0) {  
 
-            BookService.removeBook(
-                this.state.id
+            BookService.addCopies(
+                this.state.id,
+                this.state.number
             ).then(
                 response => {
                 this.setState({
@@ -64,7 +72,7 @@ export default class RemoveBook extends Component {
     }
 
     componentDidMount() {
-        PageService.getRemoveBookPage().then(
+        PageService.getAddCopiesPage().then(
           response => {
             console.log("authorized")
             this.setState({
@@ -100,23 +108,30 @@ export default class RemoveBook extends Component {
         else {  
             return(
                 <div>
-                <h3 class="SerachHeading">Remove Book</h3>
+                <h3 class="SerachHeading">Add Copies</h3>
                     <Form
-                        onSubmit={this.handleRemoveBook}
+                        onSubmit={this.handleAddCopies}
                         ref={c => {
                             this.form = c;
                         }}
                     >              
-                    <div class="removeBook">
+                    <div class="addCopies">
                     <Input
                         type="text"
                         placeholder="Enter id of the book"
                         value={this.state.id}
                         onChange={this.onChangeId}
                         style={{width: "400px"}}
+                    /> 
+                    <Input
+                        type="number"
+                        placeholder="Enter total copies"
+                        value={this.state.number}
+                        onChange={this.onChangeNumber}
+                        style={{width: "400px"}}
                     />   
                     &nbsp;&nbsp;&nbsp;
-                        <Button variant="secondary" type="submit" size="large">Remove Book</Button>
+                        <Button variant="secondary" type="submit" size="large">Add Copies</Button>
                     </div>
                     {this.state.message && (
                         <div className="form-group">

@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -30,7 +31,7 @@ public class Book {
 	private Long id;
 	
 	@Column(name="Book_id", length=200, nullable=false, unique=false)
-    private String book_id;
+    private String bookId;
 	
 	@Column(name="TITLE", length=200, nullable=false, unique=false)
     private String title;
@@ -38,7 +39,7 @@ public class Book {
 	@ManyToMany(cascade=CascadeType.REMOVE)
 	@JoinTable(
 	  name = "book_author", 
-	  joinColumns = @JoinColumn(name = "book_id"), 
+	  joinColumns = @JoinColumn(name = "bookId"), 
 	  inverseJoinColumns = @JoinColumn(name = "author_id"))	
 	private List<Author> authors;
 	
@@ -46,8 +47,11 @@ public class Book {
 	@JoinTable(name="book_publisher")
 	private Publisher publisher;
 	
-	@Column(name="COPIES", nullable=false, unique=false)
-	private int copies;
+	@Column(name="CURR_COPIES", nullable=false, unique=false)
+	private int currentCopies;
+	
+	@Column(name="TOT_COPIES", nullable=false, unique=false)
+	private int totalCopies;
 	
 	@Column(name="GENRE", length=50, nullable=false, unique=false)
 	private String genre;
@@ -55,17 +59,25 @@ public class Book {
 	@Column(name="SUBGENRE", length=50, nullable=false, unique=false)
 	private String subGenre;
 	
+	@Lob
+    private byte[] content;
+	
+    private String fileName;
+	
 	public Book() {
 		
 	}
-	public Book(String bookId,String title, List<Author> authors, Publisher publisher, int copies, String genre, String subgenre) {
-		this.book_id = bookId;
+	public Book(String bookId,String title, List<Author> authors, Publisher publisher, int copies, String genre, String subgenre,byte[] content,String fileName) {
+		this.bookId = bookId;
 		this.title = title;
 		this.authors = authors;
 		this.publisher = publisher;
-		this.copies = copies;
+		this.currentCopies = copies;
+		this.totalCopies = copies;
 		this.genre = genre;
-		this.subGenre = subgenre;		
+		this.subGenre = subgenre;	
+		this.fileName = fileName;
+		this.content = content;
 	}
 	
 	public String getTitle(){
@@ -89,11 +101,18 @@ public class Book {
 		this.authors = authors;
 	}
 	
-	public int getCopies(){
-		return copies;
+	public int getCurrentCopies(){
+		return currentCopies;
 	}
-	public void setCopies(int copies){
-		this.copies = copies;
+	public void setCurrentCopies(int copies){
+		this.currentCopies = copies;
+	}
+	
+	public int getTotalCopies(){
+		return totalCopies;
+	}
+	public void setTotalCopies(int copies){
+		this.totalCopies = copies;
 	}
 	
 	public String getGenre(){
@@ -109,4 +128,19 @@ public class Book {
 	public void setSubGenre(String subgenre){
 		this.subGenre = subgenre;
 	}
+	
+	public byte[] getContent(){
+		return content;
+	}
+	public void setContent(byte[] content){
+		this.content = content;
+	}
+	
+	public String getFilename(){
+		return fileName;
+	}
+	public void setFilename(String fileName){
+		this.fileName = fileName;
+	}
+	
 }

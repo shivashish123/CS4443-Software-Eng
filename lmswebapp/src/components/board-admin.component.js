@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 
-import UserService from "../services/user.service";
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonGroup } from 'reactstrap';
-
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, ButtonGroup ,Button } from 'reactstrap';
+import PageService from "../services/page.service";
+import ErrorComponent from "./error.component";
 export default class BoardAdmin extends Component {
   constructor(props) {
     super(props);
@@ -12,9 +12,10 @@ export default class BoardAdmin extends Component {
       content: "",
       showStaff: false,
       showFine: false,
+      authorized:0
     };
     this.toggleStaffMenu = this.toggleStaffMenu.bind(this);
-    this.toggleFineMenu = this.toggleFineMenu.bind(this);
+    this.toggleFineMenu = this.toggleFineMenu.bind(this);   
   }
   
   toggleStaffMenu() {
@@ -26,29 +27,43 @@ export default class BoardAdmin extends Component {
   }
 
   componentDidMount() {
-    UserService.getAdminBoard().then(
+    PageService.getAdminPage().then(
       response => {
+        console.log("authorized")
         this.setState({
-          content: response.data,
-          
+          authorized : 2
         });
       },
       error => {
+        console.log("error")
         this.setState({
           content:
             (error.response &&
               error.response.data &&
               error.response.data.message) ||
             error.message ||
-            error.toString()
+            error.toString() ,
+          authorized : 1
         });
       }
     );
   }
 
-  render() {
+  render() {  
+    if(this.state.authorized === 1){
+      return(
+        <ErrorComponent/>
+      )
+    }
+    else if(this.state.authorized == 0){
+      return(
+        <div></div>
+      )
+    }
+    else {
     return (
-      <div>
+      <div>      
+        <div>
         <ButtonGroup class="button-grp">
         <Dropdown  isOpen={this.state.showStaff} toggle={this.toggleStaffMenu} >
           <DropdownToggle caret color="success" size="lg">
@@ -57,7 +72,7 @@ export default class BoardAdmin extends Component {
           <DropdownMenu>
             <DropdownItem tag={Link} to="/addstaff">Add Staff</DropdownItem>
             <DropdownItem tag={Link} to="/removestaff">Remove Staff</DropdownItem>
-            <DropdownItem tag={Link} to="/">Staff Info</DropdownItem>
+            <DropdownItem tag={Link} to="/infostaff">Staff Info</DropdownItem>
           </DropdownMenu>
         </Dropdown>
         &nbsp;&nbsp;&nbsp;
@@ -72,7 +87,7 @@ export default class BoardAdmin extends Component {
         </Dropdown>
         </ButtonGroup>
         &nbsp;&nbsp;&nbsp;
-        <button class="menuAD2">
+        <button class="menuAD2" tag={Link} to="/infouser">
           User History
         </button>
         &nbsp;&nbsp;&nbsp;
@@ -84,11 +99,14 @@ export default class BoardAdmin extends Component {
         
         <div className="container">
           <button className="menuAD"> Issue Book</button>&nbsp;&nbsp;&nbsp;
-          <button className="menuAD"><a href="/addBook">Add a book</a></button>&nbsp;&nbsp;&nbsp;
-          <button className="menuAD"><a href="/removeBook"> Remove a book</a></button>&nbsp;&nbsp;&nbsp;
+          <Button className="menuAD" tag={Link} to="/addbook">Add a book</Button>&nbsp;&nbsp;&nbsp;
+          <Button className="menuAD" tag={Link} to="/removebook">Remove a book</Button>&nbsp;&nbsp;&nbsp;
           <button className="menuAD" > Place order for book</button>
+          <Button className="menuAD" tag={Link} to="/addcopies">Add copies</Button>&nbsp;&nbsp;&nbsp;
         </div>
+        </div>        
       </div>
     );
+    }
   }
 }

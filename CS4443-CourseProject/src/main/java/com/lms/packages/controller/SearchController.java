@@ -13,11 +13,11 @@ import com.lms.packages.payload.request.SearchRequest;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/search")
 public class SearchController {
 
 		
-	@PostMapping("/search")
+	@PostMapping("/search-book")
 	public ResponseEntity<?> searchByKeyword(@Valid @RequestBody SearchRequest searchRequest){
 		
 		System.out.println(searchRequest.getKeyword());
