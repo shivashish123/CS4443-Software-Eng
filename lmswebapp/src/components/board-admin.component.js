@@ -87,7 +87,7 @@ export default class BoardAdmin extends Component {
         </Dropdown>
         </ButtonGroup>
         &nbsp;&nbsp;&nbsp;
-        <button class="menuAD2">
+        <button class="menuAD2" tag={Link} to="/infouser">
           User History
         </button>
         &nbsp;&nbsp;&nbsp;
