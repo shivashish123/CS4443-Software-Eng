@@ -91,13 +91,16 @@ public class AdminController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllStaff() {
 		List<Staff> entities = staffRepository.findAll();
+		
+//		List<Person> entities2 = personRepository.getAllUsers();
+//		System.out.println(entities2.size());
 		return ResponseEntity.ok(entities);
 	}
 	
 	@PostMapping("/info-user")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllUsers() {
-		List<Person> entities = personRepository.findUsers();
+		List<Person> entities = personRepository.getAllUsers();
 		return ResponseEntity.ok(entities);
 	}
 	

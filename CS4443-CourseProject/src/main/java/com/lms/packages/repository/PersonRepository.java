@@ -21,6 +21,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	Boolean existsByEmail(String email);
 	Person findByEmailIgnoreCase(String email);
 	
-	@Query("select p from person p, role_id r where p.id== r.id and p.role_id = 1")
+	@Query("select p from Person p where p.role.id = 1")
 	List<Person> getAllUsers();
 }
