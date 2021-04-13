@@ -33,4 +33,11 @@ public class WebPageController {
 		System.out.println("remove Book page");
 		return ResponseEntity.ok(new MessageResponse("Access Granted"));
 	}	
+	
+	@GetMapping("/addCopies")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<MessageResponse> addCopiesPageAccess() {
+		System.out.println("add Copies page");
+		return ResponseEntity.ok(new MessageResponse("Access Granted"));
+	}	
 }

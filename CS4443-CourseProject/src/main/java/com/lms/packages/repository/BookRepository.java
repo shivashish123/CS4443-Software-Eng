@@ -20,8 +20,15 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	int countByGenreSubgenre(String genre , String subgenre);    
     
     @Modifying
-    @Query("delete from Book b where b.book_id= ?1")
+    @Query("delete from Book b where b.bookId= ?1")
 	@Transactional
     int deleteById(String id);
+
+	Optional<Book> findBybookId(String id);
+	
+	@Modifying
+	@Query("update Book b set b.totalCopies = ?2 + b.totalCopies where b.bookId= ?1")
+	@Transactional
+	void updateCopies(String id, int count);
 
 }

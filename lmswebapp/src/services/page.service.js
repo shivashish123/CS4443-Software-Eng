@@ -19,6 +19,10 @@ class PageService {
   getRemoveBookPage() {
     return axios.get(API_URL + 'removeBook', { headers: authHeader() })
   }  
+  
+  getAddCopiesPage(){
+    return axios.get(API_URL + 'addCopies', { headers: authHeader() })
+  }
 
 }
 

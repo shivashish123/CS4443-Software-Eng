@@ -1,9 +1,13 @@
 package com.lms.packages.payload.request;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-public class AddBookRequest {
+import org.springframework.web.multipart.MultipartFile;
+
+public class AddBookRequest implements Serializable {
 	@NotBlank
     private String title;
 	
@@ -16,6 +20,8 @@ public class AddBookRequest {
 	private String genre;
 	
 	private String subGenre;
+	
+	private MultipartFile cover;
 	
 	public String getTitle(){
 		return title;
@@ -57,6 +63,13 @@ public class AddBookRequest {
 	}
 	public void setSubGenre(String subgenre){
 		this.subGenre = subgenre;
+	}
+	
+	public MultipartFile getCover(){
+		return cover;
+	}
+	public void setCover(MultipartFile cover){
+		this.cover = cover;
 	}
 	
 }

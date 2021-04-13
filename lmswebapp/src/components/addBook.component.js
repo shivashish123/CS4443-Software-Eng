@@ -47,6 +47,7 @@ export default class AddBook extends Component {
         this.onChangeGenre  = this.onChangeGenre.bind(this);
         this.onChangeSubGenre  = this.onChangeSubGenre.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
         this.state = {
            title : "" ,
            list : [],
@@ -55,7 +56,8 @@ export default class AddBook extends Component {
            newItem :"",
            Genre: "",
            subGenre: "",
-           authorized: 0
+           authorized: 0,
+           selectedFile : undefined
           };
           
     }
@@ -112,16 +114,32 @@ export default class AddBook extends Component {
           });  
           
     }
+
+    onFileChangeHandler(e){
+      console.log(e.target.files[0])
+      e.preventDefault();
+        this.setState({
+            selectedFile: e.target.files[0]
+        });
+ 
+    }
     
     handleSubmit(e){
         e.preventDefault();
+        const formData = new FormData();
+        var authors = [] ;
+        this.state.list.map((x)=>{
+          authors.push(x.value)
+        });
+        formData.append('title',this.state.title);
+        formData.append('authors',authors);
+        formData.append('publisher',this.state.publisher);
+        formData.append('copies',this.state.copies);
+        formData.append('genre',this.state.Genre);
+        formData.append('subGenre',this.state.subGenre);
+        formData.append('cover',this.state.selectedFile);
         BookService.addBook(
-            this.state.title,
-            this.state.list,
-            this.state.publisher,
-            this.state.copies,
-            this.state.Genre,
-            this.state.subGenre
+           formData
         ).then(
             response => {
               this.setState({
@@ -267,7 +285,9 @@ export default class AddBook extends Component {
                         onChange={this.onChangeSubGenre}                        
                         options={SubGenreOptions[this.state.Genre]}
                     />                      
-
+                    <label>Upload Book Cover </label>
+                    <input type="file" name="file" onChange={this.onFileChangeHandler}/>
+                    <br/><br/>
                     <button type="submit" 
                     disabled = {!this.state.list.length}
                     >Add Book</button>
