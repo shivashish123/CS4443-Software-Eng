@@ -1,9 +1,10 @@
 package com.lms.packages.repository;
 
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.lms.packages.model.Person;
 
@@ -17,4 +18,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
 	Boolean existsByEmail(String email);
 	Person findByEmailIgnoreCase(String email);
+	
+	@Query("select p from person p, role_id r where p.id== r.id and p.role_id = 1")
+	List<Person> findUsers();
 }

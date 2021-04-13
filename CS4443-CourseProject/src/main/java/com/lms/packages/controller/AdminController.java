@@ -94,6 +94,13 @@ public class AdminController {
 		return ResponseEntity.ok(entities);
 	}
 	
+	@PostMapping("/info-user")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getAllUsers() {
+		List<Person> entities = personRepository.findUsers();
+		return ResponseEntity.ok(entities);
+	}
+	
 	@PostMapping("/add-admin")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
