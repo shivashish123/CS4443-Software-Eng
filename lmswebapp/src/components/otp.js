@@ -49,12 +49,18 @@ export default class Otp extends Component {
         return (
             <div>
                {this.state.passform === false &&
-                   <div className="container">
-                 <div className="  offset-md-3">
-                    <form onSubmit={this.handleSubmit}>
+                   <div className="card" style={{ width: '15rem' }}>
+                    <div className="card-body">
+                    <form >
                         <label>Enter the OTP</label><br />
-                        <input type="text" value={this.state.otp} onChange={this.handleChange} /><br />
-                        <input type="submit" />
+                        <input className ="form-control "type="text" value={this.state.otp} onChange={this.handleChange} />
+                        
+                        <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                            
+                            <label className="btn btn-secondary">
+                             <input type="radio" name="options" id="option3" autocomplete="off" onClick={this.handleSubmit}/> Submit
+                            </label>
+                            </div>
                     </form>
 
                     

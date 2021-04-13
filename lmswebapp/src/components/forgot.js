@@ -1,7 +1,27 @@
 import React, {Component} from "react"
 import ForgotService from "../services/forgot.service";
-
+import { isEmail } from "validator";
 import Otp from "./otp"
+
+const required = value => {
+    if (!value) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          This field is required!
+        </div>
+      );
+    }
+  };
+  
+  const email = value => {
+    if (!isEmail(value)) {
+      return (
+        <div className="alert alert-danger" role="alert">
+          This is not a valid email.
+        </div>
+      );
+    }
+  };
 export default class Forgot extends Component{
     constructor(props){
         super(props);
@@ -53,18 +73,24 @@ export default class Forgot extends Component{
             <div>
                 { this.state.otpform ===false &&
                 <div>
-                    <div >
-                    <div className="  offset-md-3">
-                        <form onSubmit={this.handleSubmit}>
-                            <label>Email ID</label><br />
-                            <input type="text" value={this.state.emailid} onChange={this.handleChange} /><br />
-                            <input type="submit" />
-                        </form>
-
+                    <div  className="card"  style={{ width: '30rem' }}>
+                    <div className="card-body" >
+                        <form >
+                            <div className="form-group"> 
+                            <label>Email ID</label>
+                            <input className="form-control"type="text" value={this.state.emailid} onChange={this.handleChange} validations={[required, email]}/>
+                            <small id="emailHelp" class="form-text text-muted">Otp will be sent to the mail to reset password.</small>
                         
+                            <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                            
+                            <label className="btn btn-secondary">
+                             <input type="radio" name="options" id="option3" autoComplete="off" onClick={this.handleSubmit}/> Submit
+                            </label>
+                            </div>
+                            </div>
+                        </form>   
                     </div>
-                    
-                </div> 
+                    </div> 
             </div>
             }
             {   

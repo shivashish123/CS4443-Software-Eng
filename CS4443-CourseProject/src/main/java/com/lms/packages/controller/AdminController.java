@@ -26,10 +26,12 @@ import com.lms.packages.model.Person;
 import com.lms.packages.model.Staff;
 
 import com.lms.packages.repository.PersonRepository;
+import com.lms.packages.repository.RoleRepository;
 import com.lms.packages.repository.StaffRepository;
 import com.lms.packages.security.services.UserDetailsImpl;
 import com.lms.packages.payload.request.LoginRequest;
 import com.lms.packages.payload.request.SearchRequest;
+import com.lms.packages.payload.request.SignupRequest;
 import com.lms.packages.payload.request.StaffSignupRequest;
 import com.lms.packages.payload.request.StaffRemoveRequest;
 import com.lms.packages.payload.response.JwtResponse;
@@ -54,6 +56,9 @@ public class AdminController {
 
 	@Autowired
 	JwtUtils jwtUtils;
+	
+	@Autowired
+	RoleRepository roleRepository;
 
 	@PostMapping("/add-staff")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -89,5 +94,55 @@ public class AdminController {
 		return ResponseEntity.ok(entities);
 	}
 	
+	@PostMapping("/add-admin")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
+		if (personRepository.existsByEmail(signUpRequest.getEmail())) {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Error: Email is already in use!"));
+		}
+
+		// Create new user's account
+		Person user = new Person(signUpRequest.getUsername() ,signUpRequest.getEmail(),
+							 encoder.encode(signUpRequest.getPassword()),signUpRequest.getAddress(),signUpRequest.getContact(),signUpRequest.getDOB());
+
+		//String strRole = signUpRequest.getRole();
+		Role role;
+		
+		System.out.println(signUpRequest.getContact());
+		System.out.println(signUpRequest.getDOB());
+		System.out.println(signUpRequest.getAddress());
+		
+		Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+				.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+		role = (adminRole);
+
+		/*if (strRole == null) {
+			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			role = userRole;
+		} else {
+			
+				switch (strRole) {
+				case "ROLE_ADMIN":
+					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					role = (adminRole);
+
+					break;			
+				default:
+					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					role = (userRole);
+				}		
+		}*/
+		
+		user.setRole(role);		
+		personRepository.save(user);
+
+		return ResponseEntity.ok(new MessageResponse("Admin added successfully!"));
+	}
 
 }

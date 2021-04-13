@@ -51,15 +51,21 @@ export default class Passwordreset extends Component {
         return(
             <div>
                 
-               { !this.state.success && <div className="container">
-                 <div className=" offset-md-3">
-                    <form onSubmit={this.handleSubmit}>
-                        <label>Please Enter the new password</label><br />
-                        New Password  <br/>
-                        <input type="password" value={this.state.pass} onChange={this.handlepass1Change} /><br />
-                        Confirm New Password <br/>
-                        <input type="password" value={this.state.confirm_pass} onChange={this.handlepass2Change} /><br />
-                        <input type="submit" value="Change Password"/>
+               { !this.state.success && <div className="card"style={{ width: '30rem' }}>
+                 <div className=" card-body">
+                    <form >
+                        <label><h5>Please Enter the new password</h5></label><br />
+                        New Password  
+                        <input className="form-control"type="password" value={this.state.pass} onChange={this.handlepass1Change} /><br />
+                        Confirm New Password 
+                        <input className="form-control"type="password" value={this.state.confirm_pass} onChange={this.handlepass2Change} />
+
+                        <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                            
+                            <label className="btn btn-secondary">
+                             <input type="radio" name="options" id="option3" autocomplete="off" onClick={this.handleSubmit}/> Change Password
+                            </label>
+                            </div>
                     </form>
                 
                 </div>
