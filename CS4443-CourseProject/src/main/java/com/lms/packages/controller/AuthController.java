@@ -25,13 +25,16 @@ import com.lms.packages.service.EmailSenderService;
 import java.util.Random;
 import com.lms.packages.model.ConfirmationToken;
 import com.lms.packages.model.ERole;
+import com.lms.packages.model.Feedback;
 import com.lms.packages.model.Role;
 import com.lms.packages.model.Person;
 import com.lms.packages.repository.ConfirmationTokenRepository;
+import com.lms.packages.repository.FeedbackRepository;
 import com.lms.packages.repository.PersonRepository;
 import com.lms.packages.repository.RoleRepository;
 import com.lms.packages.security.services.UserDetailsImpl;
 import com.lms.packages.payload.request.ConfirmPassword;
+import com.lms.packages.payload.request.FeedbackRequest;
 import com.lms.packages.payload.request.ForgotEmailRequest;
 import com.lms.packages.payload.request.ForgotToken;
 import com.lms.packages.payload.request.LoginRequest;
@@ -59,6 +62,9 @@ public class AuthController {
 
 	@Autowired
 	JwtUtils jwtUtils;
+	
+	@Autowired
+	FeedbackRepository feedbackRepository;
 	
 	@Autowired
 	private ConfirmationTokenRepository confirmationTokenRepository;
@@ -216,6 +222,23 @@ public class AuthController {
 		
 		return ResponseEntity.ok(new MessageResponse("Email sent to user successfully!"));
 	}
-	
+	@RequestMapping(value = "/savefeedback", method = RequestMethod.POST)
+	public ResponseEntity<?> savefeedback( @RequestBody FeedbackRequest feedback ) {
+		 
+		System.out.println(feedback.getName());
+		System.out.println(feedback.getEmail());
+		System.out.println(feedback.getMessage());
+		System.out.println(feedback.getRating());
+		
+		Feedback userfeedback=new Feedback(feedback.getName(),
+				feedback.getEmail()
+				,feedback.getMessage(),
+				feedback.getRating());
+		
+		feedbackRepository.save(userfeedback);
+		
+		
+		return ResponseEntity.ok(new MessageResponse("Feedback added successfully!"));
+	}
 
 }

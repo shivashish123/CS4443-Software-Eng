@@ -19,6 +19,7 @@ import AddAdmin from "./components/add-admin.component";
 import StaffInfo from "./components/info-staff.component";
 import UserInfo from "./components/info-user.component";
 import AddCopies from "./components/addCopies.component";
+import FeedBackApp from "./components/feedbackApp";
 
 class App extends Component {
   constructor(props) {
@@ -117,6 +118,9 @@ class App extends Component {
               </div>
             )}
           </nav>
+          <div>
+            <FeedBackApp />
+          </div>
 
           <div className="container mt-3">
             <Switch>
