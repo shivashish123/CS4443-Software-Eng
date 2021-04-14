@@ -101,6 +101,7 @@ public class AdminController {
 	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllUsers() {
 		List<Person> entities = personRepository.getAllUsers();
+		System.out.println(entities.size());
 		return ResponseEntity.ok(entities);
 	}
 	

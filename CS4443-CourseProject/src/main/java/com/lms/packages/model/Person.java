@@ -37,7 +37,7 @@ public class Person {
 	@Column(name="FINE", nullable=true, unique=false)
 	private int fine;
 	
-	@ManyToOne(fetch = FetchType.LAZY)	
+	@ManyToOne	
 	@JoinTable(name="role_id")
 	private Role role;
 	

@@ -17,6 +17,7 @@ export default class UserInfo extends Component {
       componentDidMount() {
         UserService.info().then(
           response => {
+            console.log(response.data)
             this.setState({
               content: response.data
             });
