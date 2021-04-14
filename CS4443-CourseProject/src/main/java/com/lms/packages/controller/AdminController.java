@@ -98,7 +98,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/info-user")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllUsers() {
 		List<Person> entities = personRepository.getAllUsers();
 		return ResponseEntity.ok(entities);
