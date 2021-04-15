@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import '../App.css';
 import UserService from "../services/user.service";
 import {Table} from 'react-bootstrap';
-import UserHistory from "./userhistory"
+import { Redirect } from "react-router";
 
 
 export default class UserInfo extends Component {
@@ -13,12 +13,11 @@ export default class UserInfo extends Component {
     
         this.state = {
           content:[],
-          history:"",
-          show:false
+          redirect:false,
+          email:""
         };
         
         this.rowClick=this.rowClick.bind(this);
-        this.userhistory=this.userhistory.bind(this);
       }
     
       componentDidMount() {
@@ -41,26 +40,18 @@ export default class UserInfo extends Component {
           }
         );
       }
-      userhistory(username){
-        
-        console.log("history");
-        return (
-          <div>
-            <UserHistory name={username}/>
-          </div>
-        )
-      }
-      rowClick(username){
-        this.setState({show:true});
-        console.log(username);
-        this.setState({history:this.userhistory(username)});
-        
+      rowClick(userEmail){
+          this.setState({email:userEmail});
+          this.setState({redirect:true});
       } 
       
 
 
   render() {
     
+    if(this.state.redirect) {
+      return <Redirect to={{pathname: '/userhistory',state: { email: this.state.email }}} ></Redirect>;
+    }
     return (
         <div>
             <h1>User Details</h1>
@@ -77,7 +68,7 @@ export default class UserInfo extends Component {
                     {   
                         this.state.content.map((item,i)=>(
                           
-                        <tr key={i} onClick={()=>{this.rowClick(item.userName);}}>
+                        <tr key={i} onClick={()=>{this.rowClick(item.email);}}>
                             <td>{item.userName}</td>
                             <td>{item.email}</td>
                             <td>{item.contact}</td>
@@ -88,7 +79,6 @@ export default class UserInfo extends Component {
                         ))
                         
                     }
-                    {this.state.show && <tr><td>{this.state.history}</td></tr>}
                     
                 </tbody>
             </Table>

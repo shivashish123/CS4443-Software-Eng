@@ -20,6 +20,7 @@ import StaffInfo from "./components/info-staff.component";
 import UserInfo from "./components/info-user.component";
 import AddCopies from "./components/addCopies.component";
 import FeedBackApp from "./components/feedbackApp";
+import UserHistory from "./components/user-history.component";
 
 class App extends Component {
   constructor(props) {
@@ -130,6 +131,7 @@ class App extends Component {
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/admin" component={BoardAdmin} />
               <Route exact path="/user" component={BoardUser} />
+              <Route exact path="/userhistory" component={UserHistory} />
               <Route exact path="/addbook" component={AddBook} />
               <Route exact path="/removebook" component={RemoveBook} />
               <Route exact path="/addstaff" component={AddStaff} />
