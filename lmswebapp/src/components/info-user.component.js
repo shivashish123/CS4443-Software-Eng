@@ -49,6 +49,7 @@ export default class UserInfo extends Component {
                         <td>Contact No</td>
                         <td>Date of Birth</td>
                         <td>Address</td>
+                        <td>Fine</td>
                     </tr>
                     {
                         this.state.content.map((item,i)=>
@@ -58,6 +59,7 @@ export default class UserInfo extends Component {
                             <td>{item.contact}</td>
                             <td>{item.dob}</td> 
                             <td>{item.address}</td>  
+                            <td>{item.fine}</td>  
                         </tr>
                         )
 

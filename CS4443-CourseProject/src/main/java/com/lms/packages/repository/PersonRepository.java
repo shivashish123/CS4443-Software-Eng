@@ -1,6 +1,6 @@
 package com.lms.packages.repository;
 
-import java.util.List;
+import java.util.*;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,4 +23,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 	
 	@Query("select p from Person p where p.role.id = 1")
 	List<Person> getAllUsers();
+	
+	@Query("select s from Person s where s.email = ?1")
+	Person getUser(String email);
 }

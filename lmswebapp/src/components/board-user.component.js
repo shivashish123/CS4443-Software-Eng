@@ -12,7 +12,7 @@ export default class BoardUser extends Component {
   }
 
   componentDidMount() {
-    UserService.getUserBoard().then(
+    UserService.getUser().then(
       response => {
         this.setState({
           content: response.data
@@ -35,7 +35,7 @@ export default class BoardUser extends Component {
     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>{this.state.content}</h3>
+          <h3>{JSON.stringify(this.state.content.email)}</h3>
         </header>
       </div>
     );

@@ -9,6 +9,13 @@ class UserService {
     return axios.post(API_URL + "info-user", {
     }, { headers: authHeader() });
   }
+
+  getUser(){
+    const email = JSON.parse(localStorage.getItem('user')).email;
+    return axios.post(API_URL + "user-details", {
+      email
+    },{ headers: authHeader() });
+  }
 }
 
 export default new UserService();
