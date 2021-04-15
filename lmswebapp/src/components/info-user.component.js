@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import '../App.css';
 import UserService from "../services/user.service";
 import {Table} from 'react-bootstrap';
+import UserHistory from "./userhistory"
+
 
 export default class UserInfo extends Component {
 
@@ -10,8 +12,13 @@ export default class UserInfo extends Component {
         super(props);
     
         this.state = {
-          content: []
+          content:[],
+          history:"",
+          show:false
         };
+        
+        this.rowClick=this.rowClick.bind(this);
+        this.userhistory=this.userhistory.bind(this);
       }
     
       componentDidMount() {
@@ -34,10 +41,26 @@ export default class UserInfo extends Component {
           }
         );
       }
+      userhistory(username){
+        
+        console.log("history");
+        return (
+          <div>
+            <UserHistory name={username}/>
+          </div>
+        )
+      }
+      rowClick(username){
+        this.setState({show:true});
+        console.log(username);
+        this.setState({history:this.userhistory(username)});
+        
+      } 
+      
 
 
   render() {
-
+    
     return (
         <div>
             <h1>User Details</h1>
@@ -51,9 +74,10 @@ export default class UserInfo extends Component {
                         <td>Address</td>
                         <td>Fine</td>
                     </tr>
-                    {
-                        this.state.content.map((item,i)=>
-                        <tr key={i}>
+                    {   
+                        this.state.content.map((item,i)=>(
+                          
+                        <tr key={i} onClick={()=>{this.rowClick(item.userName);}}>
                             <td>{item.userName}</td>
                             <td>{item.email}</td>
                             <td>{item.contact}</td>
@@ -61,13 +85,14 @@ export default class UserInfo extends Component {
                             <td>{item.address}</td>  
                             <td>{item.fine}</td>  
                         </tr>
-                        )
-
+                        ))
+                        
                     }
+                    {this.state.show && <tr><td>{this.state.history}</td></tr>}
                     
                 </tbody>
             </Table>
-
+            
         </div>
     );
   }

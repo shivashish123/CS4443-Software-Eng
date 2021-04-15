@@ -3,6 +3,7 @@ import '../App.css';
 import StaffService from "../services/staff.service";
 import {Table} from 'react-bootstrap';
 
+
 export default class StaffInfo extends Component {
 
 
@@ -33,6 +34,7 @@ export default class StaffInfo extends Component {
           }
         );
       }
+   
 
 
   render() {
@@ -51,7 +53,7 @@ export default class StaffInfo extends Component {
                     </tr>
                     {
                         this.state.content.map((item,i)=>
-                        <tr key={i}>
+                        <tr key={i} >
                             <td>{item.userName}</td>
                             <td>{item.email}</td>
                             <td>{item.contact}</td>
