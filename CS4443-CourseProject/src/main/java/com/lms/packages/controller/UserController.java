@@ -47,6 +47,7 @@ public class UserController {
 	PersonRepository personRepository;
 	
 	@PostMapping("/user-details")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> getDetails(@Valid @RequestBody UserDashboardRequest userDashboardRequest) {
 		Person entity = personRepository.getUser(userDashboardRequest.getEmail());
 		return ResponseEntity.ok(entity);
