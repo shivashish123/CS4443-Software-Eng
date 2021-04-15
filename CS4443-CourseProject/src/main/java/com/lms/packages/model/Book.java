@@ -59,6 +59,12 @@ public class Book {
 	@Column(name="SUBGENRE", length=50, nullable=false, unique=false)
 	private String subGenre;
 	
+	@Column(name="Rating",nullable=true, unique=false)
+	private double rating = 0.0;
+	
+	@Column(name="Popularity",nullable=true , unique=false)
+	private double popularity = 0.0;
+	
 	@Lob
     private byte[] content;
 	
