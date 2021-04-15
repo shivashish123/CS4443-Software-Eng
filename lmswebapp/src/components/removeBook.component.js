@@ -99,6 +99,7 @@ export default class RemoveBook extends Component {
         }
         else {  
             return(
+                
                 <div>
                 <h3 class="SerachHeading">Remove Book</h3>
                     <Form
@@ -106,7 +107,8 @@ export default class RemoveBook extends Component {
                         ref={c => {
                             this.form = c;
                         }}
-                    >              
+                    >    
+                     {!this.state.successful && (
                     <div class="removeBook">
                     <Input
                         type="text"
@@ -117,7 +119,7 @@ export default class RemoveBook extends Component {
                     />   
                     &nbsp;&nbsp;&nbsp;
                         <Button variant="secondary" type="submit" size="large">Remove Book</Button>
-                    </div>
+                     </div>)} 
                     {this.state.message && (
                         <div className="form-group">
                             <div

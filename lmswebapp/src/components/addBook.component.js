@@ -206,6 +206,8 @@ export default class AddBook extends Component {
                         this.form = c;
                     }}
                     >
+                    {!this.state.successful && (
+                    <div>
                     <div className="form-group">
                         <label htmlFor="Book Title">Book Title</label>
                         <Input
@@ -291,6 +293,23 @@ export default class AddBook extends Component {
                     <button type="submit" 
                     disabled = {!this.state.list.length}
                     >Add Book</button>
+                    </div>)}
+
+                    {this.state.message && (
+                      <div className="form-group">
+                        <div
+                          className={
+                            this.state.successful
+                              ? "alert alert-success"
+                              : "alert alert-danger"
+                          }
+                          role="alert"
+                        >
+                          {this.state.message}
+                        </div>
+                      </div>
+                    )}
+
                     </Form>
                     {/* <div style={{ marginTop: 20 }}>{JSON.stringify(this.state.list)}</div>
                     <div style={{ marginTop: 20 }}>{JSON.stringify(this.state.copies)}</div> */}
