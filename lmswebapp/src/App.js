@@ -21,7 +21,7 @@ import UserInfo from "./components/info-user.component";
 import AddCopies from "./components/addCopies.component";
 import FeedBackApp from "./components/feedbackApp";
 import UserHistory from "./components/user-history.component";
-
+import Bookpage from "./components/book-page.component";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -141,6 +141,7 @@ class App extends Component {
               <Route exact path="/forgot" component={Forgot} />
               <Route exact path="/addadmin" component={AddAdmin} />
               <Route exact path="/addcopies" component={AddCopies} />
+              <Route exact path="/bookpage" component={Bookpage} />
             </Switch>
           </div>
         </div>

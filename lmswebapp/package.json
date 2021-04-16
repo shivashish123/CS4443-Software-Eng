@@ -13,6 +13,8 @@
     "react-dom": "^17.0.2",
     "react-dropdown": "^1.9.2",
     "react-feedback-popup": "^1.3.1",
+    "react-icons": "^4.2.0",
+    "react-ratings-declarative": "^3.4.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-select": "^4.3.0",
