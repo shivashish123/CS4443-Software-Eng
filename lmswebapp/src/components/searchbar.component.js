@@ -73,7 +73,8 @@ export default class SearchBar extends Component {
                 console.log(response.data)
                 console.log("success")
                 this.setState({
-                  searchList: response.data
+                  searchList: response.data,
+                  successful: true
                 });
               },
               error => {
@@ -138,7 +139,11 @@ export default class SearchBar extends Component {
                  </div>
             </Form>      
 
-            <GridComponent list={this.state.searchList}/>      
+            {this.state.successful && (
+            <div className="searchResults">              
+            <h5>Search Results </h5>
+            <GridComponent list={this.state.searchList}/> 
+            </div> )}
             </div>
 
             

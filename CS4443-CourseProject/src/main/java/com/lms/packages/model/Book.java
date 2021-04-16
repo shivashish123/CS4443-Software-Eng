@@ -89,10 +89,10 @@ public class Book {
 	@Column(name="SUBGENRE", length=50, nullable=false, unique=false)
 	private String subGenre;
 	
-	@Column(name="Rating",nullable=true, unique=false)
+	@Column(name="Rating",nullable=false, unique=false)
 	private double rating = 0.0;
 	
-	@Column(name="Popularity",nullable=true , unique=false)
+	@Column(name="Popularity",nullable=false , unique=false)
 	private double popularity = 0.0;
 	
 	@Lob
@@ -114,6 +114,8 @@ public class Book {
 		this.subGenre = subgenre;	
 		this.fileName = fileName;
 		this.content = content;
+		this.rating = 0.0;
+		this.popularity = 0.0;
 	}
 	
 	public String getTitle(){
@@ -178,5 +180,21 @@ public class Book {
 	public void setFilename(String fileName){
 		this.fileName = fileName;
 	}
+	
+	public double getRating(){
+		return rating;
+	}
+	public void setRating(double rating){
+		this.rating = rating;
+	}
+	
+	public double getPopularity(){
+		return popularity;
+	}
+	public void setPopularity(double rating){
+		this.popularity = popularity;
+	}
+	
+	
 	
 }
