@@ -19,7 +19,7 @@ export default class Bookpage extends Component {
         this.state={
             content:"",
             Bookprops:{
-                id:"ID211",
+                id:"ID122",
                 rating:4,
                 author:"niraj",
                 popularity:3.5
@@ -34,6 +34,12 @@ export default class Bookpage extends Component {
             this.setState({
               content: response.data
             });
+            console.log(response.data.title)
+            console.log(response.data.authors)
+            console.log(response.data.authors[0].authorName)
+            console.log(this.state.content.authors)
+            console.log(this.state.content.authors[0])
+            console.log(this.state.content.authors[0].authorName)
           },
           error => {
             this.setState({
@@ -59,7 +65,7 @@ export default class Bookpage extends Component {
           <CardTitle tag="h5">Book</CardTitle>
           
         </CardBody>
-        <img width="20%" src={logo} alt="Card image cap" />
+        <img width="60%" src={"data:image/png;base64,"+this.state.content.content} alt="Card image cap" />
         <CardBody>
             <Card body outline color="secondary">
             <CardText>

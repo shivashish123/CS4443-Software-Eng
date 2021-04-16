@@ -181,20 +181,5 @@ public class Book {
 		this.fileName = fileName;
 	}
 	
-	public double getRating(){
-		return rating;
-	}
-	public void setRating(double rating){
-		this.rating = rating;
-	}
-	
-	public double getPopularity(){
-		return popularity;
-	}
-	public void setPopularity(double rating){
-		this.popularity = popularity;
-	}
-	
-	
-	
+		
 }
