@@ -3,7 +3,7 @@ import '../App.css';
 import UserService from "../services/user.service";
 import {Table} from 'react-bootstrap';
 import { Redirect } from "react-router";
-
+import '../myTable.css';
 
 export default class UserInfo extends Component {
 
@@ -55,7 +55,7 @@ export default class UserInfo extends Component {
     return (
         <div>
             <h1>User Details</h1>
-            <Table striped variant="dark">
+            <Table variant="dark">
                 <tbody>
                     <tr>
                         <td>Name</td>
@@ -68,7 +68,7 @@ export default class UserInfo extends Component {
                     {   
                         this.state.content.map((item,i)=>(
                           
-                        <tr key={i} onClick={()=>{this.rowClick(item.email);}}>
+                        <tr class="trow" key={i} onClick={()=>{this.rowClick(item.email);}}>
                             <td>{item.userName}</td>
                             <td>{item.email}</td>
                             <td>{item.contact}</td>

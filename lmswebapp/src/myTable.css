@@ -1,0 +1,9 @@
+.trow:hover{
+    cursor: pointer;
+    background-color: blue;
+    color:white;
+}
+.trow{
+    background-color :#b19cd9 ;
+    color:black;
+}
