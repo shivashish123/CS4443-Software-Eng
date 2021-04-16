@@ -25,12 +25,14 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.lms.packages.model.Author;
 import com.lms.packages.model.Book;
+import com.lms.packages.model.Person;
 import com.lms.packages.model.Publisher;
 import com.lms.packages.payload.request.AddBookRequest;
 import com.lms.packages.payload.request.AddCopiesRequest;
 import com.lms.packages.payload.request.RemoveBookRequest;
 import com.lms.packages.payload.request.ShowBookRequest;
 import com.lms.packages.payload.request.StaffSignupRequest;
+import com.lms.packages.payload.request.UserDashboardRequest;
 import com.lms.packages.payload.response.MessageResponse;
 import com.lms.packages.repository.AuthorRepository;
 import com.lms.packages.repository.BookRepository;
@@ -154,4 +156,18 @@ public class BookController {
 					.body(new MessageResponse("Error: ID does not exist"));
 		}		
 	}
+	
+	@PostMapping("/book-details")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getbook(@Valid @RequestBody ShowBookRequest showBookRequest) {
+		System.out.println(showBookRequest.getId());
+		Optional<Book> book = bookRepository.findBybookId(showBookRequest.getId());
+		if(book.isEmpty()) {
+			System.out.println("lol");
+		}
+		System.out.println(book.get().getTitle());
+		return ResponseEntity.ok(book);
+	}
+	
+	
 }

@@ -30,6 +30,13 @@ class BookService {
         id
       }, { headers: authHeader() }); 
     }
+    getBook(id){
+      console.log(id);
+      return axios
+      .post(API_URL +"book-details", {
+        id
+      }, { headers: authHeader() }); 
+    }
 }
 
 export default new BookService();

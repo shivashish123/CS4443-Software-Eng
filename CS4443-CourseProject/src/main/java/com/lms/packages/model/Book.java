@@ -43,6 +43,36 @@ public class Book {
 	  inverseJoinColumns = @JoinColumn(name = "author_id"))	
 	private List<Author> authors;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getBookId() {
+		return bookId;
+	}
+	public void setBookId(String bookId) {
+		this.bookId = bookId;
+	}
+	public double getRating() {
+		return rating;
+	}
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+	public double getPopularity() {
+		return popularity;
+	}
+	public void setPopularity(double popularity) {
+		this.popularity = popularity;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	@ManyToOne(cascade=CascadeType.REMOVE)	
 	@JoinTable(name="book_publisher")
 	private Publisher publisher;

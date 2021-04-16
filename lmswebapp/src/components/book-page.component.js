@@ -3,19 +3,23 @@ import logo from "../book.png"
 import flame from "../flame.svg"
 import StarRatings from 'react-star-ratings';
 import Ratings from 'react-ratings-declarative';
+
 import { IoRocketOutline } from 'react-icons/io5';
+import BookService from '../services/book.service'
 import {
     Card, CardText, CardBody, CardLink,
-    CardTitle, CardSubtitle, Button,Col, Row, CardHeader
+    CardTitle, CardSubtitle, Button,Col, Row, CardHeader, Table
   } from 'reactstrap';
 import { RatingIcon } from 'semantic-ui-react';
+import { Tab } from 'bootstrap';
 export default class Bookpage extends Component {
 
     constructor(props){
         super(props);
         this.state={
+            content:"",
             Bookprops:{
-                id:1,
+                id:"ID211",
                 rating:4,
                 author:"niraj",
                 popularity:3.5
@@ -23,7 +27,26 @@ export default class Bookpage extends Component {
 
         }
     }
-
+    componentDidMount() {
+        BookService.getBook(this.state.Bookprops.id).then(
+          response => {
+            console.log(response.data)
+            this.setState({
+              content: response.data
+            });
+          },
+          error => {
+            this.setState({
+              content:
+                (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+                error.message ||
+                error.toString()
+            });
+          }
+        );
+      }
 
     render() {
         return (
@@ -31,7 +54,7 @@ export default class Bookpage extends Component {
                 <Row >
                 <Col sm="5" >
                 <Card body outline color="secondary">
-                    <CardHeader>Book Title </CardHeader>
+                    <CardHeader>{this.state.content.title}</CardHeader>
         <CardBody>
           <CardTitle tag="h5">Book</CardTitle>
           
@@ -40,11 +63,11 @@ export default class Bookpage extends Component {
         <CardBody>
             <Card body outline color="secondary">
             <CardText>
-            Book ID : {this.state.Bookprops.id}<br/><br/>
+            Book ID : {this.state.content.bookId}<br/><br/>
             
             <div> Ratings &nbsp; &nbsp; 
             <StarRatings
-                rating={this.state.Bookprops.rating}
+                rating={this.state.content.rating}
                 starRatedColor="green"
                 changeRating={this.changeRating}
                 numberOfStars={5}
@@ -56,7 +79,7 @@ export default class Bookpage extends Component {
             </div><br/>
             <div> Popularity &nbsp; &nbsp; 
             <Ratings
-            rating={this.state.Bookprops.popularity}
+            rating={this.state.content.popularity}
             widgetRatedColors="rgb(204, 0, 0)"
             changeRating={this.changeRating}
             widgetSpacings="5px"
@@ -80,8 +103,16 @@ export default class Bookpage extends Component {
       <Col sm="7">
       
       <Card body outline color="secondary">
-          <CardBody>Book Description</CardBody>
-      </Card>
+      <CardHeader>Description</CardHeader>
+      <CardBody>
+      <Table>
+          <tbody>
+              
+          </tbody>    
+      </Table>
+      </CardBody>
+      
+          </Card>
       </Col>
       </Row>
         <Button color="secondary" size="large">Issue Book</Button>&nbsp;
