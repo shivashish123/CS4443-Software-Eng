@@ -28,9 +28,26 @@ public class SearchController {
 	@PostMapping("/search-book")
 	public ResponseEntity<?> searchByKeyword(@Valid @RequestBody SearchRequest searchRequest){
 		
-		List<Book> entities = bookRepository.findAll();
-		System.out.println(entities.size());
-		return ResponseEntity.ok(entities);
+		
+//		List<Book> entities = bookRepository.findAll();
+//		System.out.println(entities.size());
+//		return 
+		String searchBy = searchRequest.getSearchBy(); 
+		String sortBy = searchRequest.getSortBy();
+		String keyword = searchRequest.getKeyword();
+		System.out.println(searchBy);
+		System.out.println(sortBy);
+		System.out.println(keyword);
+		if(searchBy.equals("Book")) {
+			List<Book> entities = bookRepository.findByBookKeyword(keyword,1);
+			System.out.println(entities.size());
+			return ResponseEntity.ok(entities);
+		}else if(searchBy == "Author") {
+			
+		}else if(searchBy == "Publisher") {
+			
+		}
+		return null;
 		
 	}
 }
