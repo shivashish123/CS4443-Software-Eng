@@ -10,6 +10,7 @@ export default class GridComponent extends Component {
     render(){
         const { list} = this.props;
         console.log(list);
+        console.log(list[0].authors[0].authorName);
         console.log("grid component")
         // var imgData = "data:image/png;base64," + list[0].content
         // var imgData2 = "data:image/png;base64," + list[1].content
