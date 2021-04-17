@@ -17,8 +17,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	
 	Optional<Book> findByTitle(String title);
 	
-    @Query("select count(id) from Book b where b.genre= ?1 and b.subGenre= ?2")
-	int countByGenreSubgenre(String genre , String subgenre);    
     
     @Modifying
     @Query("delete from Book b where b.bookId= ?1")

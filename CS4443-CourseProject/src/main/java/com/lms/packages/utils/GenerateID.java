@@ -7,7 +7,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.lms.packages.repository.BookRepository;
+import com.lms.packages.model.BookIdGeneration;
+import com.lms.packages.repository.BookIdGenerationRepository;
 
 public class GenerateID {	
 	
@@ -52,13 +53,15 @@ public class GenerateID {
 		return genres2;		
 	}
 	
-	public String generateBookId(String genre,String subgenre , BookRepository bookRepository){
+	public String generateBookId(String genre,String subgenre , BookIdGenerationRepository bookIdGenerationRepository){
 		String id = "ID";
 		id+=genres.get(genre);
 		id+=subGenres.get(genre).get(subgenre);
 		
-		int similarBookCount = bookRepository.countByGenreSubgenre(genre,subgenre);
+		int similarBookCount = bookIdGenerationRepository.countByGenreSubgenre(genre,subgenre);
 		similarBookCount++;
+		BookIdGeneration newId = new BookIdGeneration(genre,subgenre);
+		bookIdGenerationRepository.save(newId);
 		id+= String.valueOf(similarBookCount);
 		
 		return id;
