@@ -36,7 +36,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	List<Book> findAll();
 
 	//@Query("select b from Book b where title like '%?1%' order by case ?2 when 1 then b.rating when 2 then b.popularity when 3 then b.title end")
-	@Query("select b from Book b where b.title like %?1% ") 
+	@Query("select b from Book b where b.title like %?1%  order by case ?2 when 1 then b.rating when 2 then b.popularity when 3 then b.title end ") 
 	List<Book> findByBookKeyword(String keyword, int sortBy);
 
 }
