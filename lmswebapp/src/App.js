@@ -22,6 +22,8 @@ import AddCopies from "./components/addCopies.component";
 import FeedBackApp from "./components/feedbackApp";
 import UserHistory from "./components/user-history.component";
 import BookPageMain from "./components/book-page-main.component";
+import AuthorPage from "./components/authorPage.component";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -143,6 +145,7 @@ class App extends Component {
               <Route exact path="/addcopies" component={AddCopies} />
               {/* <Route exact path="/bookpage" component={BookPageMain} /> */}
               <Route exact path="/bookpage" render={(props) => <BookPageMain {...props}/>}/>
+              <Route exact path="/authorpage" component={AuthorPage} />
             </Switch>
           </div>
         </div>
