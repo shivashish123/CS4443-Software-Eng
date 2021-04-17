@@ -22,11 +22,11 @@ public class Issue {
 	@Column(name = "issue_id")
 	private Long id;
 	
-	@ManyToOne()	
+	@ManyToOne(cascade=CascadeType.REMOVE)	
 	@JoinTable(name="issue_user")
 	private Person user;
 	
-	@ManyToOne()	
+	@ManyToOne(cascade=CascadeType.REMOVE)	
 	@JoinTable(name="issue_book")
 	private Book book;
 	
