@@ -1,6 +1,7 @@
 package com.lms.packages.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 import com.lms.packages.model.Role;
@@ -41,6 +42,18 @@ public class Person {
 	@JoinTable(name="role_id")
 	private Role role;
 	
+	@OneToMany(mappedBy="user")
+	@Column(name="issue_list",nullable=true)
+	private List<Issue> issues;
+	
+	public List<Issue> getIssues() {
+		return issues;
+	}
+
+	public void setIssues(List<Issue> issues) {
+		this.issues = issues;
+	}
+
 	public Person() {
 		
 	}

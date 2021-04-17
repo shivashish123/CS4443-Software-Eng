@@ -28,9 +28,14 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 	Optional<Book> findBybookId(String id);
 	
 	@Modifying
-	@Query("update Book b set b.totalCopies = ?2 + b.totalCopies where b.bookId= ?1")
+	@Query("update Book b set b.totalCopies = ?2 + b.totalCopies,b.currentCopies=?2 + b.currentCopies where b.bookId= ?1")
 	@Transactional
 	void updateCopies(String id, int count);
+	
+	@Modifying
+	@Query("update Book b set b.currentCopies = b.currentCopies - 1 where b.bookId= ?1")
+	@Transactional
+	void decreaseCopies(String id);
 	
 	//@Query("select b from Book b ")
 	List<Book> findAll();

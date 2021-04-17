@@ -72,7 +72,8 @@ public class AuthController {
 	@Autowired
 	private EmailSenderService emailSenderService;
 	
-	Random random = new Random(1000);
+	
+	Random random = new Random(System.currentTimeMillis());
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

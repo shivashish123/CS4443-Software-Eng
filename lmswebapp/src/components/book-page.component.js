@@ -6,17 +6,45 @@ import Ratings from 'react-ratings-declarative';
 import { IoRocketOutline } from 'react-icons/io5';
 import {
     Card, CardText, CardBody, CardLink,
-    CardTitle, CardSubtitle, Button,Col, Row, CardHeader
+    CardTitle, CardSubtitle, Button,Col, Row, CardHeader,Table
   } from 'reactstrap';
 import { RatingIcon } from 'semantic-ui-react';
+import IssueService from '../services/issue.service';
 export default class Bookpage extends Component {
 
     constructor(props){
         super(props);
         console.log(this.props)
         this.state={           
-            book : this.props.book
+            book : this.props.book,
+            content:"",
+            success:true
         }
+        this.handleissueClick=this.handleissueClick.bind(this)
+    }
+    handleissueClick(e){
+        e.preventDefault();
+        IssueService.issue(this.state.book.bookId).then(
+            response => {
+              console.log(response.data)
+              this.setState({
+                content: response.data,
+                
+              });
+            },
+            error => {
+              this.setState({
+                success:false,
+                content:
+                  (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                  error.message ||
+                  error.toString()
+              });
+            }
+          );
+        
     }
 
 
@@ -30,9 +58,9 @@ export default class Bookpage extends Component {
         <CardBody>
           <CardTitle tag="h5">Book</CardTitle>
           
-        </CardBody>
-        <img width="20%" src={this.state.book.imgData} alt="Card image cap" />
-        <CardBody>
+        
+        <img width="30%" src={this.state.book.imgData} alt="Card image cap" />
+        
             <Card body outline color="secondary">
             <CardText>
             Book ID : {this.state.book.bookId}<br/><br/>
@@ -75,11 +103,45 @@ export default class Bookpage extends Component {
       <Col sm="7">
       
       <Card body outline color="secondary">
-          <CardBody>Book Description</CardBody>
+      <CardHeader>Book Description</CardHeader>
+          <CardBody>
+          <Table>
+            <tbody>
+                
+                Authors : &nbsp; 
+                {
+                    this.state.book.authors.map((item,i)=>(
+                      item.authorName
+                    
+                    ))
+                }
+                
+            </tbody>
+
+          </Table>
+          </CardBody>    
       </Card>
       </Col>
       </Row>
-        <Button color="secondary" size="large">Issue Book</Button>&nbsp;
+        <Button color="secondary" size="large" onClick={this.handleissueClick}>Issue Book</Button>&nbsp;
+        {
+         !this.state.success &&
+         (
+          <div className="form-group">
+              
+            <div
+              className={
+                this.state.success
+                  ? "alert alert-success"
+                  : "alert alert-danger"
+              }
+              role="alert"
+            >
+              {this.state.content}
+            </div>
+          </div>
+        )
+        }
         <Button color="secondary" size="large">Reserve Book</Button>
         <hr color="black"></hr>
      </div>
