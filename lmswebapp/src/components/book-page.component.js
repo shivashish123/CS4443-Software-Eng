@@ -13,14 +13,9 @@ export default class Bookpage extends Component {
 
     constructor(props){
         super(props);
-        this.state={
-            Bookprops:{
-                id:1,
-                rating:4,
-                author:"niraj",
-                popularity:3.5
-            }
-
+        console.log(this.props)
+        this.state={           
+            book : this.props.book
         }
     }
 
@@ -31,20 +26,20 @@ export default class Bookpage extends Component {
                 <Row >
                 <Col sm="5" >
                 <Card body outline color="secondary">
-                    <CardHeader>Book Title </CardHeader>
+                    <CardHeader>{this.state.book.title} </CardHeader>
         <CardBody>
           <CardTitle tag="h5">Book</CardTitle>
           
         </CardBody>
-        <img width="20%" src={logo} alt="Card image cap" />
+        <img width="20%" src={this.state.book.imgData} alt="Card image cap" />
         <CardBody>
             <Card body outline color="secondary">
             <CardText>
-            Book ID : {this.state.Bookprops.id}<br/><br/>
+            Book ID : {this.state.book.bookId}<br/><br/>
             
             <div> Ratings &nbsp; &nbsp; 
             <StarRatings
-                rating={this.state.Bookprops.rating}
+                rating={this.state.book.rating}
                 starRatedColor="green"
                 changeRating={this.changeRating}
                 numberOfStars={5}
@@ -56,7 +51,7 @@ export default class Bookpage extends Component {
             </div><br/>
             <div> Popularity &nbsp; &nbsp; 
             <Ratings
-            rating={this.state.Bookprops.popularity}
+            rating={this.state.book.popularity}
             widgetRatedColors="rgb(204, 0, 0)"
             changeRating={this.changeRating}
             widgetSpacings="5px"

@@ -19,7 +19,7 @@ export default class GridComponent extends Component {
                 <div className="flexbox1">
                      {list.map((x) => (
                                 <div key={x.id}>                               
-                                <BookTile imgData={"data:image/png;base64,"+x.content} title={x.title}/>
+                                <BookTile imgData={"data:image/png;base64,"+x.content} book={x}/>
                                 </div>
                             )
                         )}  

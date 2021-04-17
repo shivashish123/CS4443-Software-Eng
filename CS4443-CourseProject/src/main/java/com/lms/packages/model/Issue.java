@@ -36,6 +36,9 @@ public class Issue {
 	@Column(name="RETURN_DATE", nullable=false, unique=false)
 	private Date returnDate;
 	
+	@Column(name="TAKEN", nullable=false, unique=false , columnDefinition = "bit default 0")
+	private boolean taken = false;
+	
 	
 	public Person getUser() {
 		return user;		
@@ -67,5 +70,13 @@ public class Issue {
 	
 	public void setReturnDate(Date date) {
 		this.returnDate = date;
+	}
+	
+	public void setTaken(boolean taken) {
+		this.taken = taken;
+	}
+	
+	public boolean getTaken() {
+		return taken;
 	}
 }
