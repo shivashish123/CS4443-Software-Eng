@@ -69,6 +69,9 @@ public class Book {
     private byte[] content;
 	
     private String fileName;
+    
+    @OneToMany(mappedBy="book")
+	private List<Issue> issues;
 	
 	public Book() {
 		

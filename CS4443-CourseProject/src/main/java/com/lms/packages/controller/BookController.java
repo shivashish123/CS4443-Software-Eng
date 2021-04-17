@@ -33,6 +33,7 @@ import com.lms.packages.payload.request.ShowBookRequest;
 import com.lms.packages.payload.request.StaffSignupRequest;
 import com.lms.packages.payload.response.MessageResponse;
 import com.lms.packages.repository.AuthorRepository;
+import com.lms.packages.repository.BookIdGenerationRepository;
 import com.lms.packages.repository.BookRepository;
 import com.lms.packages.repository.PublisherRepository;
 import com.lms.packages.utils.GenerateID;
@@ -50,6 +51,9 @@ public class BookController {
 	
 	@Autowired
 	BookRepository bookRepository ;
+	
+	@Autowired
+	BookIdGenerationRepository bookIdGenerationRepository ;
 	
 	@PostMapping(value = "/add-book",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -86,7 +90,7 @@ public class BookController {
 		
 		// get Id
 		GenerateID generateId = new GenerateID();		
-		String bookId = generateId.generateBookId(addBookRequest.getGenre(),addBookRequest.getSubGenre(),bookRepository);
+		String bookId = generateId.generateBookId(addBookRequest.getGenre(),addBookRequest.getSubGenre(),bookIdGenerationRepository);
 		
 		System.out.println(bookId);
 		Book book = new Book(bookId,

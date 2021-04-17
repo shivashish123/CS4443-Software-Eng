@@ -23,8 +23,7 @@ public class Person {
 	private String email;
 	
 	@Column(name="USER_PASSWORD",length=120, nullable=false, unique=false)
-	private String password;
-		
+	private String password;		
 	
 	@Temporal(TemporalType.DATE)
     private Date dob;
@@ -37,6 +36,9 @@ public class Person {
 
 	@Column(name="FINE", nullable=true, unique=false)
 	private int fine;
+	
+	@OneToMany(mappedBy="user")
+	private List<Issue> issues;
 	
 	@ManyToOne	
 	@JoinTable(name="role_id")
