@@ -88,6 +88,13 @@ public class Book {
 		this.popularity = 0.0;
 	}
 	
+	public String getBookId(){
+		return bookId;
+	}
+	public void setBookId(String bookId){
+		this.bookId = bookId;
+	}
+	
 	public String getTitle(){
 		return title;
 	}
