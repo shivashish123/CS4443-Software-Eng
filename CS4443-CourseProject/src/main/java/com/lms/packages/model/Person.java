@@ -37,8 +37,7 @@ public class Person {
 	@Column(name="FINE", nullable=true, unique=false)
 	private int fine;
 	
-	@OneToMany(mappedBy="user")
-	private List<Issue> issues;
+	
 	
 	@ManyToOne	
 	@JoinTable(name="role_id")

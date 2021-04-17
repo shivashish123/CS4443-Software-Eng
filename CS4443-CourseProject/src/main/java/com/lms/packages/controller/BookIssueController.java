@@ -106,7 +106,7 @@ public class BookIssueController {
 			
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setTo(user.getEmail());
-			mailMessage.setSubject("Complete Password Reset!");
+			mailMessage.setSubject("Issue Book OTP!");
 			
 			mailMessage.setText("To complete the transaction please show the OTP to Admin "+ issueotp.getIssuetoken());
 			emailSenderService.sendEmail(mailMessage);
