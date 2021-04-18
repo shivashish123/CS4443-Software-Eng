@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="ISSUE")
 public class Issue {
@@ -24,8 +26,11 @@ public class Issue {
 	
 	@ManyToOne(cascade=CascadeType.REMOVE)	
 	@JoinTable(name="issue_user")
+	@JsonBackReference
 	private Person user;
 	
+	
+
 	@ManyToOne(cascade=CascadeType.REMOVE)	
 	@JoinTable(name="issue_book")
 	private Book book;
@@ -40,6 +45,9 @@ public class Issue {
 	private boolean taken = false;
 	
 	
+	public Person getUser() {
+		return user;
+	}
 	
 	public void setUser(Person user) {
 		this.user = user;
