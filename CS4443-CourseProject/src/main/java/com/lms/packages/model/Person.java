@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.lms.packages.model.Role;
 
 @Entity
@@ -38,13 +40,14 @@ public class Person {
 	private int fine;
 	
 	
-	
+
 	@ManyToOne	
 	@JoinTable(name="role_id")
 	private Role role;
 	
 	@OneToMany(mappedBy="user")
 	@Column(name="issue_list",nullable=true)
+	@JsonManagedReference
 	private List<Issue> issues;
 	
 	public List<Issue> getIssues() {
@@ -130,6 +133,15 @@ public class Person {
       
 	public void setDOB(Date dob) {
 		this.dob = dob;
+	}
+
+	
+	public int getFine() {
+		return fine;
+	}
+
+	public void setFine(int fine) {
+		this.fine = fine;
 	}
 	
 	

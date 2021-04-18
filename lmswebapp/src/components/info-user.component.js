@@ -5,6 +5,10 @@ import {Table} from 'react-bootstrap';
 import { Redirect } from "react-router";
 import '../myTable.css';
 
+import Form from "react-validation/build/form";
+import Button from 'react-bootstrap/Button'
+import Input from "react-validation/build/input";
+
 export default class UserInfo extends Component {
 
 
@@ -14,10 +18,13 @@ export default class UserInfo extends Component {
         this.state = {
           content:[],
           redirect:false,
-          email:""
+          email:"",
+          id:""
         };
         
         this.rowClick=this.rowClick.bind(this);
+        this.handleSubmit=this.handleSubmit.bind(this);
+        this.onChangeId = this.onChangeId.bind(this);
       }
     
       componentDidMount() {
@@ -40,10 +47,21 @@ export default class UserInfo extends Component {
           }
         );
       }
+
+      onChangeId(e) {
+        this.setState({
+          id: e.target.value
+        });
+      }
+
       rowClick(userEmail){
           this.setState({email:userEmail});
           this.setState({redirect:true});
       } 
+      handleSubmit(){
+        this.setState({email:this.state.id});
+        this.setState({redirect:true});
+      }
       
 
 
@@ -55,6 +73,22 @@ export default class UserInfo extends Component {
     return (
         <div>
             <h1>User Details</h1>
+            <div>
+            <Form onSubmit={this.handleSubmit}>    
+                    <div class="removeBook">
+                    <Input
+                        type="text"
+                        placeholder="Enter email id of person"
+                        value={this.state.id}
+                        onChange={this.onChangeId}
+                        style={{width: "400px"}}
+                    />   
+                    &nbsp;&nbsp;&nbsp;
+                        <Button variant="info" type="submit" size="large">Submit</Button>
+                     </div> 
+                </Form>
+                </div>
+                <br/>   
             <Table variant="dark">
                 <tbody>
                     <tr>

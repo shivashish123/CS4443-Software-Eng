@@ -24,6 +24,10 @@ class PageService {
     return axios.get(API_URL + 'addCopies', { headers: authHeader() })
   }
 
+  getApproveIssuePage(){
+    return axios.get(API_URL + 'approveIssues', { headers: authHeader() })
+  }
+
 }
 
 export default new PageService();
