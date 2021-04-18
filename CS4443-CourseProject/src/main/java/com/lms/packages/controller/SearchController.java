@@ -20,6 +20,8 @@ import com.lms.packages.model.Book;
 import com.lms.packages.model.Publisher;
 import com.lms.packages.model.Staff;
 import com.lms.packages.payload.request.SearchRequest;
+import com.lms.packages.payload.request.SearchBooksByAuthorRequest;
+import com.lms.packages.payload.request.SearchBooksByPublisherRequest;
 import com.lms.packages.repository.AuthorRepository;
 import com.lms.packages.repository.BookRepository;
 import com.lms.packages.repository.PublisherRepository;
@@ -74,4 +76,22 @@ public class SearchController {
 		return null;
 		
 	}
+	@PostMapping("/search-book-by-author")
+	public ResponseEntity<?> searchBookByAuthor(@Valid @RequestBody SearchBooksByAuthorRequest searchBooksRequest ){
+		searchBooksRequest.setAuthorName("jk");
+		String keyword = searchBooksRequest.getAuthorName();
+		List<Author> authors = authorRepository.findByAuthorKeyword(keyword);
+		List<Book> books = bookRepository.findAllAuthorBooks(authors);
+//		System.out.println(keyword);
+		return ResponseEntity.ok(books);
+	}
+	@PostMapping("/search-book-by-publisher")
+	public ResponseEntity<?> searchBookByPublisher(@Valid @RequestBody SearchBooksByPublisherRequest  searchBooksRequest){
+		searchBooksRequest.setPublisherName("pub");
+		String keyword = searchBooksRequest.getPublisherName();
+		List<Publisher> publisher =publisherRepository.findByPublisherKeyword(keyword);
+		List<Book> books = bookRepository.findAllPublisherBooks(publisher);
+		return ResponseEntity.ok(books);
+	}
+	
 }

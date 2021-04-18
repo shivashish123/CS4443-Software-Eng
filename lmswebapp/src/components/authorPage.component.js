@@ -54,7 +54,7 @@ export default class AuthorPage extends Component{
     super(props);
   
   this.state = {
-    Authorname:" ",
+    Authorname:"J K rolling ",
     bookList:[]
   }
 }
@@ -70,7 +70,7 @@ render(){
             alt="Author-img"
             className="author-img-card"
           />
-          <h5>Author Name</h5>
+          <h5>Authors Books</h5>
         </div>
       </div>
     
