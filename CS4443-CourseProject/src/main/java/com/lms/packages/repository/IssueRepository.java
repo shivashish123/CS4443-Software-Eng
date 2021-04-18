@@ -1,8 +1,17 @@
 package com.lms.packages.repository;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.lms.packages.model.Issue;
 
 public interface IssueRepository extends JpaRepository<Issue,Long>{
+
+	
+	@Query("select i from Issue i where i.user.email = ?1")
+	List<Issue> getIssuePerson(String email);
+	
+	
 
 }

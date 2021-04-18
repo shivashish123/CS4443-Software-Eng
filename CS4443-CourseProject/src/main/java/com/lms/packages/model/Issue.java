@@ -40,9 +40,6 @@ public class Issue {
 	private boolean taken = false;
 	
 	
-	public Person getUser() {
-		return user;		
-	}
 	
 	public void setUser(Person user) {
 		this.user = user;

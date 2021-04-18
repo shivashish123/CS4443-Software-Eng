@@ -103,6 +103,7 @@ export default class BoardAdmin extends Component {
           <Button className="menuAD" tag={Link} to="/removebook">Remove a book</Button>&nbsp;&nbsp;&nbsp;
           <button className="menuAD" > Place order for book</button>&nbsp;&nbsp;&nbsp;
           <Button className="menuAD" tag={Link} to="/addcopies">Add copies</Button>&nbsp;&nbsp;&nbsp;
+          <Button className="menuAD" tag={Link} to="/approveissues">Approve Issue</Button>&nbsp;&nbsp;&nbsp;
         </div>
         </div>        
       </div>
