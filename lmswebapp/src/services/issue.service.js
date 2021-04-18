@@ -8,6 +8,12 @@ class IssueService {
            id
         }, { headers: authHeader() });
     }
+    
+    getIssues(email){
+        return axios.post(API_URL + "get-issues", {
+            email
+         }, { headers: authHeader() });
+    }
 
 
 }

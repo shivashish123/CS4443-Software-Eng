@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import com.lms.packages.service.EmailSenderService;
+import com.lms.packages.payload.request.GetIssueRequest;
 import com.lms.packages.payload.request.ShowBookRequest;
 import com.lms.packages.payload.response.MessageResponse;
 import com.lms.packages.repository.BookRepository;
@@ -32,6 +33,7 @@ import com.lms.packages.model.ConfirmationToken;
 import com.lms.packages.model.Issue;
 import com.lms.packages.model.IssueOTP;
 import com.lms.packages.model.Person;
+import com.lms.packages.model.Publisher;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -112,8 +114,20 @@ public class BookIssueController {
 			emailSenderService.sendEmail(mailMessage);
 			return ResponseEntity.ok(new MessageResponse("Book issued successfully"));
 		}
+	}
+	
+	
+	@PostMapping("/get-issues")
+	public ResponseEntity<?> getIssues(@Valid @RequestBody GetIssueRequest getIssueRequest){
+		System.out.println(getIssueRequest.getEmail());
+		String email =  getIssueRequest.getEmail();
+		Optional<Person> user= personRepository.findByEmail(email);
+		if(user.isEmpty()) {
+			return ResponseEntity.ok(new MessageResponse("Email Id does not exist in records "));
+		}
+		List<Issue> issues = issueRepository.getIssuePerson(email);
 		
-		
+		return ResponseEntity.ok(issues);
 		
 	}
 }
