@@ -24,16 +24,19 @@ import com.lms.packages.model.ERole;
 import com.lms.packages.model.Role;
 import com.lms.packages.model.Person;
 import com.lms.packages.model.Staff;
+import com.lms.packages.model.UserHistory;
 
 import com.lms.packages.repository.PersonRepository;
 import com.lms.packages.repository.RoleRepository;
 import com.lms.packages.repository.StaffRepository;
+import com.lms.packages.repository.UserHistoryRepository;
 import com.lms.packages.security.services.UserDetailsImpl;
 import com.lms.packages.payload.request.LoginRequest;
 import com.lms.packages.payload.request.SearchRequest;
 import com.lms.packages.payload.request.SignupRequest;
 import com.lms.packages.payload.request.StaffSignupRequest;
 import com.lms.packages.payload.request.StaffRemoveRequest;
+import com.lms.packages.payload.request.UserHistoryRequest;
 import com.lms.packages.payload.response.JwtResponse;
 import com.lms.packages.payload.response.MessageResponse;
 import com.lms.packages.security.jwt.JwtUtils;
@@ -50,6 +53,9 @@ public class AdminController {
 
 	@Autowired
 	StaffRepository staffRepository;
+	
+	@Autowired
+	UserHistoryRepository userHistoryRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -91,9 +97,13 @@ public class AdminController {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getAllStaff() {
 		List<Staff> entities = staffRepository.findAll();
-		
-//		List<Person> entities2 = personRepository.getAllUsers();
-//		System.out.println(entities2.size());
+		return ResponseEntity.ok(entities);
+	}
+	
+	@PostMapping("/get-user-history")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getUserHistory(@Valid @RequestBody UserHistoryRequest urequest) {
+		List<UserHistory> entities = userHistoryRepository.getHistory(urequest.getEmail());	
 		return ResponseEntity.ok(entities);
 	}
 	

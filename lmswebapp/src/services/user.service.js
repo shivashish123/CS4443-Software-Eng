@@ -16,6 +16,10 @@ class UserService {
       email
     },{ headers: authHeader() });
   }
+  getMyHistory(email){
+    return axios.post(API_URL + "get-user-history", { email
+    }, { headers: authHeader() });
+  }
 }
 
 export default new UserService();

@@ -31,6 +31,7 @@ import com.lms.packages.repository.BookRepository;
 import com.lms.packages.repository.IssueOTPRepository;
 import com.lms.packages.repository.IssueRepository;
 import com.lms.packages.repository.PersonRepository;
+import com.lms.packages.repository.UserHistoryRepository;
 import com.lms.packages.security.jwt.JwtUtils;
 import com.lms.packages.model.Book;
 import com.lms.packages.model.ConfirmationToken;
@@ -38,6 +39,7 @@ import com.lms.packages.model.Issue;
 import com.lms.packages.model.IssueOTP;
 import com.lms.packages.model.Person;
 import com.lms.packages.model.Publisher;
+import com.lms.packages.model.UserHistory;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -51,6 +53,8 @@ public class BookIssueController {
 	private JwtUtils jwtUtils;
 	@Autowired
 	IssueRepository issueRepository;
+	@Autowired
+	UserHistoryRepository userHistoryRepository ;
 	@Autowired
 	IssueOTPRepository issueOTPRepository;
 	Random random = new Random(System.currentTimeMillis());
@@ -194,6 +198,8 @@ public class BookIssueController {
 			for(Issue issue: issues) {
 				issue.setTaken(true);
 				issueRepository.save(issue);
+				UserHistory uh = new UserHistory(issue.getBook().getBookId(),issue.getUser().getEmail(),"ISSUE",new Date());
+				userHistoryRepository.save(uh);
 			}
 			return ResponseEntity.ok(new MessageResponse("All the issues were successfully approved"));	
 		}		
