@@ -44,7 +44,14 @@ public class WebPageController {
 	@GetMapping("/approveIssues")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<MessageResponse> approveIssuesPageAccess() {
-		System.out.println("add Copies page");
+		System.out.println("Approve Issuespage");
+		return ResponseEntity.ok(new MessageResponse("Access Granted"));
+	}	
+	
+	@GetMapping("/bookIssues")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<MessageResponse> bookIssuesPageAccess() {
+		System.out.println("Book Issues page");
 		return ResponseEntity.ok(new MessageResponse("Access Granted"));
 	}	
 }

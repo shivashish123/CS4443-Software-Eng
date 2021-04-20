@@ -26,6 +26,7 @@ import AuthorPage from "./components/authorPage.component";
 import PublisherPage from "./components/publisherPage.component";
 import authorsearch from "./components/authorsearch.component"
 import ApproveIssue from "./components/approveRequest.component";
+import BookIssue from "./components/bookIssue.component";
 
 class App extends Component {
   constructor(props) {
@@ -151,6 +152,7 @@ class App extends Component {
               <Route exact path="/authorpage" component={AuthorPage} />
               <Route exact path="/publisherpage" component={PublisherPage} />
               <Route exact path="/approveissues" component={ApproveIssue} />
+              <Route exact path="/bookissues" component={BookIssue} />
             </Switch>
           </div>
         </div>

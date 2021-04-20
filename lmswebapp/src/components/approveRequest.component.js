@@ -97,7 +97,8 @@ export default class ApproveIssue extends Component {
 
     handleApproveIssue(e){
         e.preventDefault();
-      
+        console.log("clicked");
+
         issueService.approveIssues(this.state.email,this.state.otpId , this.state.otp).then(
           response => {
           console.log(response)
@@ -199,7 +200,7 @@ export default class ApproveIssue extends Component {
                                 {   
                                     this.state.content.map((item,i)=>(
                                       
-                                    <tr class="trow" key={i} onClick={()=>{this.rowClick(item.email);}}>
+                                    <tr class="trow" key={i}>
                                         <td>{item.issueId}</td>
                                         <td>{item.username}</td>
                                         <td>{item.email}</td>

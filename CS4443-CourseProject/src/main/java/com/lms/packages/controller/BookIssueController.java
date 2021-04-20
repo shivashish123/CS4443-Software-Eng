@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.Random;
 import com.lms.packages.service.EmailSenderService;
 import com.lms.packages.payload.request.ApproveIssueRequest;
+import com.lms.packages.payload.request.BookIssueRequest;
 import com.lms.packages.payload.request.GetIssueRequest;
 import com.lms.packages.payload.request.GetOTP;
 import com.lms.packages.payload.request.ShowBookRequest;
@@ -43,7 +44,7 @@ import com.lms.packages.model.Publisher;
 @RequestMapping("/api/issue")
 public class BookIssueController {
 	@Autowired
-	BookRepository bookrepository;
+	BookRepository bookRepository;
 	@Autowired
 	PersonRepository personRepository;
 	@Autowired
@@ -64,7 +65,7 @@ public class BookIssueController {
 		String token= header.substring(7, header.length());
 		String email = jwtUtils.getEmailFromJwtToken(token);
 		System.out.println("User initiated issue request "+email);
-		Optional<Book> book= bookrepository.findBybookId(request.getId());
+		Optional<Book> book= bookRepository.findBybookId(request.getId());
 		Person user = personRepository.findByEmailIgnoreCase(email);
 		
 		if(book.get().getCurrentCopies()==0){
@@ -78,7 +79,7 @@ public class BookIssueController {
 			Calendar c= Calendar.getInstance();
 			c.add(Calendar.DATE, 30);
 			Date returndate=c.getTime();
-			bookrepository.decreaseCopies(request.getId());
+			bookRepository.decreaseCopies(request.getId());
 			Issue bookissue = new Issue();
 			bookissue.setBook(book.get());
 			bookissue.setUser(user);
@@ -154,7 +155,9 @@ public class BookIssueController {
 		String otp = Integer.toString(random.nextInt(99999));		
 		issueotp.setIssuetoken(otp) ;
 		issueOTPRepository.save(issueotp);
-	
+		
+		
+		System.out.println(otp);
 		// create the email
 		Optional<Person> user= personRepository.findByEmail(getOTP.getEmail());
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -195,4 +198,34 @@ public class BookIssueController {
 			return ResponseEntity.ok(new MessageResponse("All the issues were successfully approved"));	
 		}		
 	}	
+	
+	@PostMapping("/book-issues")
+	public ResponseEntity<?> BookIssues(@Valid @RequestBody BookIssueRequest bookIssueRequest){
+		
+		System.out.println("book issues");
+		Optional<Book> book= bookRepository.findBybookId(bookIssueRequest.getbookId());
+		System.out.println(bookIssueRequest.getbookId());
+		if(!book.isEmpty()) {				
+			List<Issue> issues = issueRepository.getIssueBook(book.get());
+			List<IssueRequestResponse> issueResponses = new ArrayList<IssueRequestResponse>();
+			System.out.println(issues.size());
+			for(Issue issue : issues) {
+				IssueRequestResponse response = new IssueRequestResponse( issue.getIssueId(),
+						issue.getUser().getUserName(),
+						issue.getUser().getEmail(),
+						issue.getBook().getBookId(),
+						issue.getBook().getTitle(),
+						issue.getIssueDate(),
+						issue.getReturnDate());
+				issueResponses.add(response);
+			}
+			
+			return ResponseEntity.ok(issueResponses);
+			
+		}else {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Error: ID does not exist"));
+		}			
+	}
 }

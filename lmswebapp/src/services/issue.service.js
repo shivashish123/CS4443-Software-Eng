@@ -29,6 +29,12 @@ class IssueService {
         }, { headers: authHeader() });
     }
 
+    bookIssues(bookId){
+        return axios.post(API_URL + "book-issues", {
+            bookId
+        }, { headers: authHeader() });
+    }
+
 
 }
 export default new IssueService();

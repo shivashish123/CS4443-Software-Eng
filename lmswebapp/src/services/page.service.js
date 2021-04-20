@@ -28,6 +28,10 @@ class PageService {
     return axios.get(API_URL + 'approveIssues', { headers: authHeader() })
   }
 
+  getBookIssuePage(){
+    return axios.get(API_URL + 'bookIssues', { headers: authHeader() })
+  }
+
 }
 
 export default new PageService();
