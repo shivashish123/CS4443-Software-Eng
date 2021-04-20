@@ -39,7 +39,13 @@ public class Issue {
 	@Column(name="TAKEN", nullable=false, unique=false , columnDefinition = "bit default 0")
 	private boolean taken = false;
 	
+	public long getIssueId() {
+		return id;
+	}
 	
+	public Person getUser() {
+		return user;		
+	}
 	
 	public void setUser(Person user) {
 		this.user = user;

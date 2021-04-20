@@ -15,6 +15,20 @@ class IssueService {
          }, { headers: authHeader() });
     }
 
+    getOTP(email){
+        return axios.post(API_URL + "get-otp", {
+            email
+        }, { headers: authHeader() });
+    }
+
+    approveIssues(email,issueId,otp){
+        return axios.post(API_URL + "approve-issues", {
+            email,
+            issueId,
+            otp
+        }, { headers: authHeader() });
+    }
+
 
 }
 export default new IssueService();

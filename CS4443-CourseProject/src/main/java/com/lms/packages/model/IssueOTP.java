@@ -27,18 +27,10 @@ public class IssueOTP {
 	private String issuetoken;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
+	private Date createdDate;	
 	
-	@OneToOne(targetEntity = Person.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
-    private Person person;
-	
-	public IssueOTP(Person person) {
-		
-		
-		this.person = person;
-		createdDate = new Date();
-		
+	public IssueOTP() {		
+		createdDate = new Date();		
 	}
 
 	public long getTokenid() {
@@ -48,10 +40,6 @@ public class IssueOTP {
 	public void setTokenid(long tokenid) {
 		this.tokenid = tokenid;
 	}
-
-	
-
-	
 
 	public String getIssuetoken() {
 		return issuetoken;
@@ -69,14 +57,5 @@ public class IssueOTP {
 		this.createdDate = createdDate;
 	}
 
-	public Person getPerson() {
-		return person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-
-	
 
 }

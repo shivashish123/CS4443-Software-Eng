@@ -74,6 +74,10 @@ label {
   justify-content: center;
 }
 
+.marign-top-15{
+  margin-top: 20px
+}
+
 
 .addCopies {
   width: 100%;  

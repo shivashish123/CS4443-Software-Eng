@@ -20,8 +20,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import com.lms.packages.service.EmailSenderService;
+import com.lms.packages.payload.request.ApproveIssueRequest;
 import com.lms.packages.payload.request.GetIssueRequest;
+import com.lms.packages.payload.request.GetOTP;
 import com.lms.packages.payload.request.ShowBookRequest;
+import com.lms.packages.payload.response.IssueRequestResponse;
 import com.lms.packages.payload.response.MessageResponse;
 import com.lms.packages.repository.BookRepository;
 import com.lms.packages.repository.IssueOTPRepository;
@@ -88,7 +91,7 @@ public class BookIssueController {
 			}else {
 				
 				List<Issue> issueList=user.getIssues();
-				if(issueList.size()==3) {
+				if(issueList.size()==20) {
 					return ResponseEntity
 							.badRequest()
 							.body(new MessageResponse("Maximum issue's reached "));
@@ -98,20 +101,21 @@ public class BookIssueController {
 			}
 			issueRepository.save(bookissue);
 			personRepository.save(user);
-			IssueOTP issueotp = new IssueOTP(user);
-			String otp = Integer.toString(random.nextInt(99999));
-			issueotp.setIssuetoken(otp) ;
-			// save it
-			issueOTPRepository.save(issueotp);
 			
-			// create the email
-			
-			SimpleMailMessage mailMessage = new SimpleMailMessage();
-			mailMessage.setTo(user.getEmail());
-			mailMessage.setSubject("Issue Book OTP!");
-			
-			mailMessage.setText("To complete the transaction please show the OTP to Admin "+ issueotp.getIssuetoken());
-			emailSenderService.sendEmail(mailMessage);
+//			
+//			IssueOTP issueotp = new IssueOTP(user);
+//			
+//			// save it
+//			issueOTPRepository.save(issueotp);
+//			
+//			// create the email
+//			
+//			SimpleMailMessage mailMessage = new SimpleMailMessage();
+//			mailMessage.setTo(user.getEmail());
+//			mailMessage.setSubject("Issue Book OTP!");
+//			
+//			mailMessage.setText("To complete the transaction please show the OTP to Admin "+ issueotp.getIssuetoken());
+//			emailSenderService.sendEmail(mailMessage);
 			return ResponseEntity.ok(new MessageResponse("Book issued successfully"));
 		}
 	}
@@ -126,8 +130,69 @@ public class BookIssueController {
 			return ResponseEntity.ok(new MessageResponse("Email Id does not exist in records "));
 		}
 		List<Issue> issues = issueRepository.getIssuePerson(email);
+		List<IssueRequestResponse> issueResponses = new ArrayList<IssueRequestResponse>();
+		System.out.println(user.get().getUserName());
+		for(Issue issue : issues) {
+			IssueRequestResponse response = new IssueRequestResponse( issue.getIssueId(),
+					user.get().getUserName(),
+					user.get().getEmail(),
+					issue.getBook().getBookId(),
+					issue.getBook().getTitle(),
+					issue.getIssueDate(),
+					issue.getReturnDate());
+			issueResponses.add(response);
+		}
 		
-		return ResponseEntity.ok(issues);
+		return ResponseEntity.ok(issueResponses);
 		
 	}
+	
+	@PostMapping("/get-otp")
+	public ResponseEntity<?> getIssueApproveOTP(@Valid @RequestBody GetOTP getOTP){
+		
+		IssueOTP issueotp = new IssueOTP();
+		String otp = Integer.toString(random.nextInt(99999));		
+		issueotp.setIssuetoken(otp) ;
+		issueOTPRepository.save(issueotp);
+	
+		// create the email
+		Optional<Person> user= personRepository.findByEmail(getOTP.getEmail());
+//		SimpleMailMessage mailMessage = new SimpleMailMessage();
+//		mailMessage.setTo(user.get().getEmail());
+//		mailMessage.setSubject("Issue Book OTP!");
+//		
+//		mailMessage.setText("To complete the transaction please show the OTP to Admin "+ otp);
+//		emailSenderService.sendEmail(mailMessage);
+		
+		return ResponseEntity.ok(issueotp.getTokenid());
+		
+	}
+		
+	
+	@PostMapping("/approve-issues")
+	public ResponseEntity<?> ApproveIssues(@Valid @RequestBody ApproveIssueRequest approveIssueRequest){
+		String email = approveIssueRequest.getEmail();
+		Optional<Person> user= personRepository.findByEmail(email);
+		if(user.isEmpty()) {
+			return ResponseEntity.ok(new MessageResponse("Email Id does not exist in records "));
+		}
+		
+		Optional<IssueOTP> issueOTP = issueOTPRepository.findBytokenid(approveIssueRequest.getIssueId());
+		if(issueOTP.isEmpty()) {
+			return ResponseEntity.badRequest()
+					.body(new MessageResponse("Error: Issue ID does not exist"));
+		}else if(!issueOTP.get().getIssuetoken().equals(approveIssueRequest.getOTP())) {
+			System.out.println("otp does not match");
+			return ResponseEntity.badRequest()
+					.body(new MessageResponse("OTP does not match"));
+		}else {
+			
+			List<Issue> issues = issueRepository.getIssuePerson(email);
+			for(Issue issue: issues) {
+				issue.setTaken(true);
+				issueRepository.save(issue);
+			}
+			return ResponseEntity.ok(new MessageResponse("All the issues were successfully approved"));	
+		}		
+	}	
 }
