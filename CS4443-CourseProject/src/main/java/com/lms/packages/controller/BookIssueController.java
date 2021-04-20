@@ -157,12 +157,12 @@ public class BookIssueController {
 	
 		// create the email
 		Optional<Person> user= personRepository.findByEmail(getOTP.getEmail());
-//		SimpleMailMessage mailMessage = new SimpleMailMessage();
-//		mailMessage.setTo(user.get().getEmail());
-//		mailMessage.setSubject("Issue Book OTP!");
-//		
-//		mailMessage.setText("To complete the transaction please show the OTP to Admin "+ otp);
-//		emailSenderService.sendEmail(mailMessage);
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setTo(user.get().getEmail());
+		mailMessage.setSubject("Issue Book OTP!");
+		
+		mailMessage.setText("To complete the transaction please show the OTP to Admin "+ otp);
+		emailSenderService.sendEmail(mailMessage);
 		
 		return ResponseEntity.ok(issueotp.getTokenid());
 		
