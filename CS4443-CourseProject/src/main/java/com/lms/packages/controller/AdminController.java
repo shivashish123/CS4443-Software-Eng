@@ -101,7 +101,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/get-user-history")
-	//@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> getUserHistory(@Valid @RequestBody UserHistoryRequest urequest) {
 		List<UserHistory> entities = userHistoryRepository.getHistory(urequest.getEmail());	
 		return ResponseEntity.ok(entities);
