@@ -1,15 +1,22 @@
 import React, { Component } from 'react'
 import logo from "../book.png"
 import flame from "../flame.svg"
+import '../popup.css';
 import StarRatings from 'react-star-ratings';
 import Ratings from 'react-ratings-declarative';
+import '../myTable.css';
+import '../App.css';
+import Popup from 'reactjs-popup';
 import { IoRocketOutline } from 'react-icons/io5';
 import {
     Card, CardText, CardBody, CardLink,
-    CardTitle, CardSubtitle, Button,Col, Row, CardHeader,Table
+    CardTitle, CardSubtitle, Button,Col, Row, CardHeader,Table, CardGroup
   } from 'reactstrap';
 import { RatingIcon } from 'semantic-ui-react';
 import IssueService from '../services/issue.service';
+import { Redirect } from "react-router";
+import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
+
 export default class Bookpage extends Component {
 
     constructor(props){
@@ -18,10 +25,18 @@ export default class Bookpage extends Component {
         this.state={           
             book : this.props.book,
             content:"",
-            success:true
+            success:true,
+            rate:false
+           
         }
         this.handleissueClick=this.handleissueClick.bind(this)
+        this.handlerateClick=this.handlerateClick.bind(this)
     }
+    handlerateClick(e){
+      e.preventDefault();
+      this.setState({rate:true});
+    }
+    
     handleissueClick(e){
         e.preventDefault();
         IssueService.issue(this.state.book.bookId).then(
@@ -49,6 +64,9 @@ export default class Bookpage extends Component {
 
 
     render() {
+      if(this.state.rate) {
+        return <Redirect to={{pathname: '/ratings',state: { id: this.state.book.bookId ,title:this.state.book.title}}} ></Redirect>;
+      }
         return (
             <div >
                 <Row >
@@ -59,7 +77,7 @@ export default class Bookpage extends Component {
           <CardTitle tag="h5">Book</CardTitle>
           
         
-        <img width="30%" src={this.state.book.imgData} alt="Card image cap" />
+        <img width="50%" src={this.state.book.imgData} alt="Card image cap" />
         
             <Card body outline color="secondary">
             <CardText>
@@ -105,20 +123,43 @@ export default class Bookpage extends Component {
       <Card body outline color="secondary">
       <CardHeader>Book Description</CardHeader>
           <CardBody>
-          <Table>
-            <tbody>
+          <Table variant="dark">
+            <CardGroup>
+          
+                <Card>
+                <CardText>
+                <CardTitle tag="h5">Authors</CardTitle>
                 
-                Authors : &nbsp; 
-                {
+                { 
                     this.state.book.authors.map((item,i)=>(
-                      item.authorName
+                      
+                      <tr key={i}> {i+1}.&nbsp;{item.authorName}</tr> 
                     
                     ))
+                    
                 }
+                </CardText>
+                </Card>
+                <Card>
+                <CardText>
+                <CardTitle tag="h5">Genre</CardTitle>
                 
-            </tbody>
-
+                { 
+                    this.state.book.authors.map((item,i)=>(
+                      
+                      <tr key={i}> {i+1}.&nbsp;{item.authorName}</tr> 
+                    
+                    ))
+                    
+                }
+                </CardText>
+                </Card>
+            
+          
+                </CardGroup>
           </Table>
+          
+          <Button color ="secondary" onClick={this.handlerateClick}>Rate/Review</Button>
           </CardBody>    
       </Card>
       </Col>
@@ -143,7 +184,9 @@ export default class Bookpage extends Component {
         )
         }
         <Button color="secondary" size="large">Reserve Book</Button>
+
         <hr color="black"></hr>
+        
      </div>
         )
     }

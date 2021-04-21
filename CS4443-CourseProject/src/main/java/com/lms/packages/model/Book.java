@@ -22,6 +22,8 @@ import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="BOOK")
 public class Book {
@@ -59,8 +61,10 @@ public class Book {
 	@Column(name="SUBGENRE", length=50, nullable=false, unique=false)
 	private String subGenre;
 	
-	@Column(name="Rating",nullable=false, unique=false)
-	private double rating = 0.0;
+	@OneToMany(mappedBy="book")
+	@Column(name="book_ratings",nullable=true)
+	@JsonManagedReference
+	private List<Ratings> rating;
 	
 	@Column(name="Popularity",nullable=false , unique=false)
 	private double popularity = 0.0;
@@ -87,7 +91,7 @@ public class Book {
 		this.subGenre = subgenre;	
 		this.fileName = fileName;
 		this.content = content;
-		this.rating = 0.0;
+		
 		this.popularity = 0.0;
 	}
 	
@@ -161,18 +165,22 @@ public class Book {
 		this.fileName = fileName;
 	}
 	
-	public double getRating(){
+	
+	
+	public List<Ratings> getRating() {
 		return rating;
 	}
-	public void setRating(double rating){
+	public void setRating(List<Ratings> rating) {
 		this.rating = rating;
 	}
-	
 	public double getPopularity(){
 		return popularity;
 	}
 	public void setPopularity(double rating){
 		this.popularity = popularity;
+	}
+	public Long getId() {
+		return id;
 	}
 	
 	
