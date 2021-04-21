@@ -19,15 +19,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.lms.packages.model.Author;
 import com.lms.packages.model.Book;
+import com.lms.packages.model.Person;
 import com.lms.packages.model.Publisher;
+import com.lms.packages.model.Ratings;
 import com.lms.packages.payload.request.AddBookRequest;
 import com.lms.packages.payload.request.AddCopiesRequest;
+import com.lms.packages.payload.request.RatingsRequest;
 import com.lms.packages.payload.request.RemoveBookRequest;
 import com.lms.packages.payload.request.ShowBookRequest;
 import com.lms.packages.payload.request.StaffSignupRequest;
@@ -35,8 +39,11 @@ import com.lms.packages.payload.response.MessageResponse;
 import com.lms.packages.repository.AuthorRepository;
 import com.lms.packages.repository.BookIdGenerationRepository;
 import com.lms.packages.repository.BookRepository;
+import com.lms.packages.repository.PersonRepository;
 import com.lms.packages.repository.PublisherRepository;
+import com.lms.packages.repository.RatingRepository;
 import com.lms.packages.utils.GenerateID;
+import com.lms.packages.security.jwt.JwtUtils;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -50,7 +57,16 @@ public class BookController {
 	PublisherRepository publisherRepository;
 	
 	@Autowired
+	RatingRepository ratingRepository;
+	
+	@Autowired
 	BookRepository bookRepository ;
+	
+	@Autowired
+	private JwtUtils jwtUtils;
+	
+	@Autowired
+	PersonRepository personRepository;
 	
 	@Autowired
 	BookIdGenerationRepository bookIdGenerationRepository ;
@@ -157,5 +173,51 @@ public class BookController {
 					.badRequest()
 					.body(new MessageResponse("Error: ID does not exist"));
 		}		
+	}
+	
+	
+	@PostMapping("/add-rating")
+	public ResponseEntity<?> rateBook(@RequestHeader(value="Authorization")String header,@Valid @RequestBody RatingsRequest ratings){
+		
+		String token= header.substring(7, header.length());
+		String email = jwtUtils.getEmailFromJwtToken(token);
+		System.out.println("User initiated rating request "+email);
+		System.out.println("User initiated rating request for book  "+ratings.getBookid());
+		System.out.println("Ratings "+ratings.getRating() +" Review "+ ratings.getReview());
+		Person user = personRepository.findByEmailIgnoreCase(email);
+		Optional<Book> book = bookRepository.findBybookId(ratings.getBookid());
+				
+		Ratings newRating =new Ratings();
+
+		newRating.setBook(book.get());
+		newRating.setUser(user);
+		
+		if(book.get().getRating().isEmpty()) {
+			List<Ratings> book_rating_list=new ArrayList<Ratings>();
+			book_rating_list.add(newRating);
+		}
+		else {
+			List<Ratings> book_rating_list= book.get().getRating();
+			book_rating_list.add(newRating);
+		}
+		if(user.getRating().isEmpty()) {
+			List<Ratings>user_rating_list=new ArrayList<Ratings>();
+			user_rating_list.add(newRating);
+		}
+		else {
+			List<Ratings> user_rating_list=user.getRating();
+			user_rating_list.add(newRating);
+		}
+		
+		
+		newRating.setRating(ratings.getRating());
+		newRating.setReview(ratings.getReview());
+		
+		ratingRepository.save(newRating);
+		personRepository.save(user);
+		bookRepository.save(book.get());
+		System.out.println("Book rated insane");
+		
+		return ResponseEntity.ok(new MessageResponse("Successfully Rated the Book"));
 	}
 }

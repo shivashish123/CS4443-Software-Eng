@@ -39,7 +39,10 @@ public class Person {
 	@Column(name="FINE", nullable=true, unique=false)
 	private int fine;
 	
-	
+	@OneToMany(mappedBy="user")
+	@Column(name="user_ratings",nullable=true)
+	@JsonManagedReference
+	private List<Ratings> rating;
 
 	@ManyToOne	
 	@JoinTable(name="role_id")
@@ -142,6 +145,14 @@ public class Person {
 
 	public void setFine(int fine) {
 		this.fine = fine;
+	}
+
+	public List<Ratings> getRating() {
+		return rating;
+	}
+
+	public void setRating(List<Ratings> rating) {
+		this.rating = rating;
 	}
 	
 	
