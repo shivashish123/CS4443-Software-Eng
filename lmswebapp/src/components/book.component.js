@@ -15,8 +15,10 @@ class BookTile extends Component {
       authors : this.props.book.authors,
       bookId:  this.props.book.bookId
     }
+    console.log("props")
     
   }
+
   redirectBookPage(){
     console.log("clicked");
     console.log(this.props.book);
